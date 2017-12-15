@@ -113,6 +113,7 @@ namespace Assets.Scripts.Player
         private GameObject _moveButton;
         private GameObject _actionMenu;
         private UnitClass _class;
+        private UnitOwner _owner;
         private bool _isActionMenuActive;        
         private bool _isSelected;
         private Vector2 _lastPos;
@@ -132,7 +133,7 @@ namespace Assets.Scripts.Player
 
         public void Awake()
         {
-            _indice = new Indice(/*0, 0*/);
+            _indice = new Indice();
         }
         void Start()
         {
@@ -148,9 +149,9 @@ namespace Assets.Scripts.Player
 
             _walkRange = 2;
             _atributes = new Atributes(50f, 0, 30, 0, 15, 10, 0.3f, 0.5f, 0.4f, 5);
-
-           
+                       
             _class = UnitClass.Archer;
+            _owner = UnitOwner.Player;
 
             MainLoop.Instance().interfaceList.Add(this);
         }
@@ -180,7 +181,6 @@ namespace Assets.Scripts.Player
         {
             SelectUnit();
             DeactivateActionMenu();
-           
             SetStatsValues();            
         }
 

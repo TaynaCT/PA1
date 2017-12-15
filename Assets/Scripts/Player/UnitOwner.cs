@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public enum UnitClass
+    public enum UnitOwner
     {
-        Figher,
-        Archer
+        Player,
+        Enemy,
+        Neutral
     }
 }
