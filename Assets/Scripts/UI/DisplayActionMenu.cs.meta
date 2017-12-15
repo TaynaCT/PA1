@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: bca7f2ca6f0b2d347a714d745efd94e5
+timeCreated: 1510688594
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - ActionMenuCanvas: {fileID: 223158317679728680, guid: 3d7c96639244bfe47840176e5b34029a,
+      type: 2}
+  - MoveButton: {fileID: 1526374107566000, guid: 3d7c96639244bfe47840176e5b34029a,
+      type: 2}
+  - AttackButton: {fileID: 1927823800631394, guid: 3d7c96639244bfe47840176e5b34029a,
+      type: 2}
+  - InfoButton: {fileID: 1125417377524618, guid: 3d7c96639244bfe47840176e5b34029a,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
