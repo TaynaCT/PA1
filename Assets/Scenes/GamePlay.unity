@@ -876,7 +876,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.80514437, g: 0.759, b: 0.6277033, a: 0}
+  m_BackGroundColor: {r: 0.07058824, g: 0.12156863, b: 0.09019608, a: 1}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -2470,8 +2470,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 98.9, y: 0.049987793}
-  m_SizeDelta: {x: -197.7, y: 98.8}
+  m_AnchoredPosition: {x: 0.025024414, y: 0.049987793}
+  m_SizeDelta: {x: 0.05, y: 139.43}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1816608786
 MonoBehaviour:
@@ -2485,16 +2485,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: a4a5f8af1135655479578698555e3858, type: 3}
   m_Type: 1
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2808,7 +2808,7 @@ GameObject:
   m_Layer: 5
   m_Name: StatsManager
   m_TagString: Untagged
-  m_Icon: {fileID: -1577725955494882426, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
