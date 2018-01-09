@@ -8,12 +8,21 @@ namespace Assets.Scripts.Managers
 {
     public class StatsManager : MonoBehaviour
     {
+        [SerializeField]       
+        GameObject HpBar;
         [SerializeField]
-        Slider HpBar;
+        GameObject MpBar;
         [SerializeField]
-        Slider MpBar;
+        GameObject ArmorBar;
         [SerializeField]
-        Slider ArmorBar;
+        //Slider HpBar;
+        GameObject HpBarFill;
+        [SerializeField]
+        //Slider MpBar;
+        GameObject MpBarFill;
+        [SerializeField]
+        //Slider ArmorBar;
+        GameObject ArmorBarFill;
         [SerializeField]
         Text AttackText;
         [SerializeField]
@@ -28,7 +37,7 @@ namespace Assets.Scripts.Managers
         // Use this for initialization
         void Start()
         {
-            IsActive(false);
+            IsActive(false);            
         }
 
         public void IsActive(bool active)
@@ -36,6 +45,10 @@ namespace Assets.Scripts.Managers
             HpBar.gameObject.SetActive(active);
             MpBar.gameObject.SetActive(active);
             ArmorBar.gameObject.SetActive(active);
+
+            HpBarFill.gameObject.SetActive(active);
+            MpBarFill.gameObject.SetActive(active);
+            ArmorBarFill.gameObject.SetActive(active);
             AttackText.gameObject.SetActive(active);
             ResistenceText.gameObject.SetActive(active);
             SpeedText.gameObject.SetActive(active);
@@ -45,16 +58,19 @@ namespace Assets.Scripts.Managers
 
         public void SetHpBar(float health)
         {
-            HpBar.value = health;
+            //HpBar.value = health;
+            HpBarFill.GetComponentInChildren<Image>().fillAmount = 0.5f;            
         }
         public void SetMpBar(float mpValue)
         {
-            HpBar.value = mpValue;
+            //HpBar.value = mpValue;
+            MpBarFill.GetComponent<Image>().fillAmount = 0.5f;
         }
 
         public void SetArmorBar(float armorValue)
         {
-            ArmorBar.value = armorValue;
+            // ArmorBar.value = armorValue;
+            ArmorBarFill.GetComponent<Image>().fillAmount = 0.6f;
         }        
         public void SetAttackText(int attackValue)
         {

@@ -1,9 +1,18 @@
 fileFormatVersion: 2
-guid: a4a5f8af1135655479578698555e3858
-timeCreated: 1515361430
+guid: 98aa139fe6d03e446ba59344afc8c490
+timeCreated: 1515444742
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: HeavensTower_ui_gamePlayPainel_0
+    21300002: HeavensTower_ui_gamePlayPainel_1
+    21300004: HeavensTower_ui_gamePlayPainel_2
+    21300006: HeavensTower_ui_gamePlayPainel_3
+    21300008: HeavensTower_ui_gamePlayPainel_4
+    21300010: HeavensTower_ui_gamePlayPainel_5
+    21300012: HeavensTower_ui_gamePlayPainel_6
+    21300014: HeavensTower_ui_gamePlayPainel_7
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -39,7 +48,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -57,23 +66,139 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: HeavensTower_ui_gamePlayPainel_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 433
+        width: 415
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HeavensTower_ui_gamePlayPainel_1
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 704
+        width: 264
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HeavensTower_ui_gamePlayPainel_2
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 666
+        width: 255
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HeavensTower_ui_gamePlayPainel_3
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 632
+        width: 255
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HeavensTower_ui_gamePlayPainel_4
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 598
+        width: 255
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HeavensTower_ui_gamePlayPainel_5
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 564
+        width: 255
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HeavensTower_ui_gamePlayPainel_6
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 229
+        width: 931
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HeavensTower_ui_gamePlayPainel_7
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 17
+        width: 801
+        height: 202
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 

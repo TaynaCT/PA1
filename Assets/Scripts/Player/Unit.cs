@@ -178,7 +178,7 @@ namespace Assets.Scripts.Player
         }
 
         public void OnMouseDown()
-        {
+        {            
             SelectUnit();
             DeactivateActionMenu();
             SetStatsValues();            
