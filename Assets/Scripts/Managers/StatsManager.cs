@@ -59,18 +59,18 @@ namespace Assets.Scripts.Managers
         public void SetHpBar(float health)
         {
             //HpBar.value = health;
-            HpBarFill.GetComponentInChildren<Image>().fillAmount = 0.5f;            
+            HpBarFill.GetComponentInChildren<Image>().fillAmount = health;            
         }
         public void SetMpBar(float mpValue)
         {
             //HpBar.value = mpValue;
-            MpBarFill.GetComponent<Image>().fillAmount = 0.5f;
+            MpBarFill.GetComponent<Image>().fillAmount = mpValue;
         }
 
         public void SetArmorBar(float armorValue)
         {
             // ArmorBar.value = armorValue;
-            ArmorBarFill.GetComponent<Image>().fillAmount = 0.6f;
+            ArmorBarFill.GetComponent<Image>().fillAmount = armorValue;
         }        
         public void SetAttackText(int attackValue)
         {

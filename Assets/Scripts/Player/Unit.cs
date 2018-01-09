@@ -91,7 +91,6 @@ namespace Assets.Scripts.Player
                         _hP = 0;
                     }
                 }
-
                 //(Ataque−defesa )±(Modificadores de tecnicas e terrenos)= dano no oponente                
             }
 
@@ -196,6 +195,7 @@ namespace Assets.Scripts.Player
         {
             statsManager.SetHpBar(_atributes.CurrentHealth());
             statsManager.SetMpBar(_atributes.CurrentMp());
+            statsManager.SetArmorBar(_atributes.GetArmorValue);
             statsManager.SetAttackText(_atributes.GetAttackValue);
             statsManager.SetEvadeText(_atributes.GetEvadeValue);
             statsManager.SetHitText(_atributes.GetHitValue);
