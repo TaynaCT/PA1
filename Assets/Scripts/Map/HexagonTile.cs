@@ -26,7 +26,7 @@ namespace Assets.Scripts.Map
 
         private void Awake()
         {
-            _indice = new Indice(/*0, 0*/);
+            _indice = new Indice();
         }
 
         private void Start()

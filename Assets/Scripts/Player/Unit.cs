@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Interface;
 using Assets.Scripts.SupportClasses;
+using Assets.Scripts.AI;
 
 namespace Assets.Scripts.Player
 { 
@@ -13,6 +14,9 @@ namespace Assets.Scripts.Player
     {
         const int MAXHP = 50;
         const int MAXMP = 30;
+
+        private UnitBehaviour behaviour;
+        private bool finishedTurn;
 
         struct Atributes
         {
@@ -150,7 +154,7 @@ namespace Assets.Scripts.Player
             _atributes = new Atributes(50f, 0, 30, 0, 15, 10, 0.3f, 0.5f, 0.4f, 5);
                        
             _class = UnitClass.Archer;
-            _owner = UnitOwner.Player;
+            //_owner = UnitOwner.Player;
 
             MainLoop.Instance().interfaceList.Add(this);
         }
@@ -316,6 +320,141 @@ namespace Assets.Scripts.Player
         {
             get { return _class; }
         }
-        
+
+        private MovementType movementType;
+        private Faction faction;
+        private Indice currentTileCoords;
+        private Indice previousTileCoords;
+        private List<Indice> inMovementRangeCoords;
+        private List<Indice> inAttackRangeCoords;
+
+        public Indice CurrentTileCoords { get { return currentTileCoords; } }
+        public List<Indice> InMovementRangeCoords { get { return inMovementRangeCoords; } }
+        public List<Indice> InAttackRangeCoords { get { return inAttackRangeCoords; } }
+        public UnitBehaviour Behaviour { get { return behaviour; } set { behaviour = value; } }
+        public bool FinishedTurn { get { return finishedTurn; } set { finishedTurn = value; } }
+        public MovementType MovementType { get { return movementType; } set { movementType = value; } }
+        public Faction Faction { get { return faction; } set { faction = value; } }
+
+        public void AddTileToMovementRange(int x, int y)
+        {
+            Indice p = new Indice(x, y);
+
+            if (!inMovementRangeCoords.Contains(p) && p != currentTileCoords)
+            {
+                inMovementRangeCoords.Add(p);
+            }
+        }
+
+        public void SetMovementRange(List<Indice> range)
+        {
+            inMovementRangeCoords = range;
+        }
+
+        public void SetAttackRange(List<Indice> range)
+        {
+            inAttackRangeCoords = range;
+        }
+
+        public void ResetMovementRange()
+        {
+            inMovementRangeCoords.Clear();
+        }
+
+        ///----- new stuff
+        public void AddTileToAttackRange(int x, int y)
+        {
+            Indice p = new Indice(x, y);
+
+            if (!inAttackRangeCoords.Contains(p))
+            {
+                inAttackRangeCoords.Add(p);
+            }
+        }
+
+        public void ResetAttackRange()
+        {
+            inAttackRangeCoords.Clear();
+        }
+
+        public void ReturnToPreviousCoords()
+        {
+            currentTileCoords = previousTileCoords;
+        }
+
+        public void MoveTo(Indice position)
+        {
+            previousTileCoords = currentTileCoords;
+            currentTileCoords = position;
+        }
+
+        public static InteractionSimulationResults SimulateInteraction(Unit initiator, Unit defender)
+        {
+            InteractionType interactionType = InteractionType.Battle;
+            int damageDealt = 0;
+            int damageTaken = 0;
+            int victory = 0;
+
+            switch (Faction.GetRelationship(initiator.Faction, defender.Faction))
+            {
+                case FactionRelationship.Friendly:
+                    interactionType = InteractionType.Healing;
+
+                    damageDealt = 10;
+                    break;
+                case FactionRelationship.Neutral:
+                    break;
+                case FactionRelationship.Hostile:
+                    interactionType = InteractionType.Battle;
+
+                    damageDealt = initiator.attack - defender.defense;
+
+                    if (defender.hp - damageDealt <= 0)
+                    {
+                        damageTaken = 0;
+                        victory = 1;
+                    }
+                    else
+                    {
+                        damageTaken = defender.attack - initiator.defense;
+
+                        if (initiator.hp - damageTaken <= 0)
+                        {
+                            victory = -1;
+                        }
+                        else
+                        {
+                            victory = 0;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return new InteractionSimulationResults(interactionType, damageDealt, damageTaken, victory);
+        }
+
+        public static void Interact(Unit initiator, Unit defender)
+        {
+            switch (Faction.GetRelationship(initiator.Faction, defender.Faction))
+            {
+                case FactionRelationship.Friendly:
+                    break;
+                case FactionRelationship.Neutral:
+                    break;
+                case FactionRelationship.Hostile:
+
+                    defender.hp -= initiator.attack - defender.defense;
+
+                    if (defender.hp <= 0) return;
+
+                    initiator.hp -= defender.attack - initiator.defense;
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 }
