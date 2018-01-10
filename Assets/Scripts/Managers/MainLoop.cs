@@ -37,7 +37,7 @@ namespace Assets.Scripts.Managers
         public void Awake()
         {
             //definir o tamanho do mapa
-            _map = new Matrix(16, 8);
+            _map = new Matrix(16, 16);
 
             Vector2 unitInicialPos = _map.GetMatrixCell(2, 3).transform.position;
 

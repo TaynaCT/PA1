@@ -25,12 +25,12 @@ namespace Assets.Scripts.Map
                     int rand = Random.Range(0, 6);
                     if (j % 2 == 0)
                     {
-                        _matrix[i, j] = GameObject.Instantiate((GameObject)Resources.Load("HexagonSprite"), new Vector2(-8 + i, 4 - j), Quaternion.identity).GetComponent<HexagonTile>();                        
-                        _matrix[i, j].Indice.SetIndice(i, j);                       
+                        _matrix[i, j] = GameObject.Instantiate((GameObject)Resources.Load("HexagonSprite"), new Vector2(1.12f * i - 9, 0.95f * j - 4), Quaternion.identity).GetComponent<HexagonTile>();
+                        _matrix[i, j].Indice.SetIndice(i, j);                        
                     }
                     else
                     {
-                        _matrix[i, j] = GameObject.Instantiate((GameObject)Resources.Load("HexagonSprite"), new Vector2((i - 7.5f), 4 - j), Quaternion.identity).GetComponent<HexagonTile>();
+                        _matrix[i, j] = GameObject.Instantiate((GameObject)Resources.Load("HexagonSprite"), new Vector2((1.12f * i - 8.44f), 0.95f * j - 4), Quaternion.identity).GetComponent<HexagonTile>();
                         _matrix[i, j].Indice.SetIndice(i, j);                        
                     }
 

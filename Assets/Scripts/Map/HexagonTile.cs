@@ -40,7 +40,7 @@ namespace Assets.Scripts.Map
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Tile => x " + _indice.X + "y " + _indice.Y);
+                Debug.Log("Tile => x " + _indice.X + "y " + _indice.Y+"Pos ->" + transform.position);
                 if (_isHighLight)
                 {
                     MainLoop.Instance().HighLightUnitRange();

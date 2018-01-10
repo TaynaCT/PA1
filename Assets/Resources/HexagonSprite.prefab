@@ -65,7 +65,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.12, y: 1.24}
   m_EdgeRadius: 0
 --- !u!114 &114898153592688690
 MonoBehaviour:
@@ -79,10 +79,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TileSprite:
-  - {fileID: 21300000, guid: c197e7857307a8b49bd8e880a373fc42, type: 3}
-  - {fileID: 21300004, guid: c197e7857307a8b49bd8e880a373fc42, type: 3}
-  - {fileID: 21300002, guid: c197e7857307a8b49bd8e880a373fc42, type: 3}
-  - {fileID: 21300006, guid: c197e7857307a8b49bd8e880a373fc42, type: 3}
+  - {fileID: 21300008, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300018, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300040, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300034, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
 --- !u!212 &212068057245586836
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -92,6 +92,7 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -107,6 +108,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
