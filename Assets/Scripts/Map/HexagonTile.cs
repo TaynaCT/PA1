@@ -113,7 +113,7 @@ namespace Assets.Scripts.Map
         {
             if (!_isHighLight)
             {
-                this.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
                 _isHighLight = true;
             }
             else

@@ -83,6 +83,16 @@ MonoBehaviour:
   - {fileID: 21300018, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
   - {fileID: 21300040, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
   - {fileID: 21300034, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300008, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300022, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300030, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300032, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300034, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300002, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300004, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300014, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300016, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
+  - {fileID: 21300038, guid: 8f49c1a808645da43810cb7ea0c34236, type: 3}
 --- !u!212 &212068057245586836
 SpriteRenderer:
   m_ObjectHideFlags: 1

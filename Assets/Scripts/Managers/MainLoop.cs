@@ -37,8 +37,9 @@ namespace Assets.Scripts.Managers
         public void Awake()
         {
             //definir o tamanho do mapa
-            _map = new Matrix(16, 16);
+            _map = new Matrix(24, 16);
 
+            //Posições iniciais do player
             Vector2 unitInicialPos = _map.GetMatrixCell(2, 3).transform.position;
 
             UnitPlayer = GameObject.Instantiate((GameObject)Resources.Load("Unit"), unitInicialPos, Quaternion.identity).GetComponent<Unit>();
