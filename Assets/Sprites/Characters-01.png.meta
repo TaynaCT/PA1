@@ -1,11 +1,12 @@
 fileFormatVersion: 2
-guid: abc1ef28bae2103459715d286f1b77b1
-timeCreated: 1515555697
+guid: 2a52057a08a39764383976336ba4c275
+timeCreated: 1515634746
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: boss-01_0
-    21300002: boss-01_1
+    21300000: Characters-Wolf
+    21300002: Characters-Luck
+    21300004: Characters-Farmer
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -82,29 +83,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: boss-01_0
+      name: Characters-Wolf
       rect:
         serializedVersion: 2
-        x: 34
-        y: 610
-        width: 137
-        height: 176
+        x: 13
+        y: 15
+        width: 65
+        height: 104
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: boss-01_1
+      name: Characters-Luck
       rect:
         serializedVersion: 2
-        x: 315
-        y: 616
-        width: 129
-        height: 163
+        x: 116
+        y: 22
+        width: 93
+        height: 87
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Characters-Farmer
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 14
+        width: 67
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

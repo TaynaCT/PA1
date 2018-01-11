@@ -26,7 +26,9 @@ namespace Assets.Scripts.Managers
         public StatsManager StatsManager;
         public GameObject ActionMenuCanvas;
         public GameObject MoveButton;
+        
         public Unit UnitPlayer;
+        public Unit Enemy;
         
         private Matrix _map;
         private GameObject _actionMenu;
@@ -40,13 +42,23 @@ namespace Assets.Scripts.Managers
             _map = new Matrix(24, 16);
 
             //Posições iniciais do player
-            Vector2 unitInicialPos = _map.GetMatrixCell(2, 3).transform.position;
+            Vector2 playerInicialPos = _map.GetMatrixCell(2, 3).transform.position;
+            Vector2 enemyInicialPos = _map.GetMatrixCell(6, 6).transform.position;
 
-            UnitPlayer = GameObject.Instantiate((GameObject)Resources.Load("Unit"), unitInicialPos, Quaternion.identity).GetComponent<Unit>();
+            UnitPlayer = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), playerInicialPos, Quaternion.identity).GetComponent<Unit>();
 
             UnitPlayer.SetActionMenu(ActionMenuCanvas);
             UnitPlayer.SetMoveButton(MoveButton);
             UnitPlayer.Indice.SetIndice(2, 3);
+            UnitPlayer.Faction = Faction.Player0;
+
+            Enemy = GameObject.Instantiate((GameObject)Resources.Load("UnitEnemy"), enemyInicialPos, Quaternion.identity).GetComponent<Unit>();
+
+            Enemy.SetActionMenu(ActionMenuCanvas);
+            Enemy.SetMoveButton(MoveButton);
+            Enemy.Indice.SetIndice(6, 6);
+            Enemy.Faction = Faction.World0Enemy;
+
         }
 
         // Use this for initialization
@@ -96,10 +108,10 @@ namespace Assets.Scripts.Managers
         public void HighLightUnitRange()
         {
             Debug.Log("Enters");
-
+            UnitPlayer.MovementType = MovementType.Foot;
             // _map.CalculateUnitRange(UnitPlayer);
             _map.CalculateUnitMovementRange(UnitPlayer);
-
+            
             for (int y = 0; y < _map.MatrixHeight; y++)
             {
                 for (int x = 0; x < _map.MatrixWidth; x++)
@@ -107,7 +119,7 @@ namespace Assets.Scripts.Managers
                     Indice p = new Indice(x, y);
                     Debug.Log(p.X + "," + p.Y);
 
-                    if (UnitPlayer.InRangeCoordsList.Contains(p))
+                    if (UnitPlayer.InMovementRangeCoords.Contains(p) /*UnitPlayer.InRangeCoordsList.Contains(p)*/)
                     {
                         Debug.Log("ContemP!!!! ");
                         Debug.Log(UnitPlayer.InRangeCoordsList.Contains(p));
