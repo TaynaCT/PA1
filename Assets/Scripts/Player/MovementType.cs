@@ -8,6 +8,7 @@ namespace Assets.Scripts.Player
     {
         Attack = -2,
         IgnoreAll = -1,
-        Foot = 0
+        Foot = 0,
+        Defense = 2
     }
 }

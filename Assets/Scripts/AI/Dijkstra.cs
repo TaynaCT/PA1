@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using Assets.Scripts.SupportClasses;
 using Assets.Scripts.Map;
+using Assets.Scripts.Player;
 
 namespace Assets.Scripts.AI
 {
@@ -48,7 +49,8 @@ namespace Assets.Scripts.AI
 
                 if (current.Here == end) break;
 
-                List<Indice> adjacents = board.GetAdjacentTiles(current.Here.X, current.Here.Y);
+                List<Indice> adjacents = board.GetAdjTile(current.Here.X, current.Here.Y);
+               
                 for (int i = 0; i < adjacents.Count; i++)
                 {
                     Node processing = new Node(adjacents[i], current.Here, 1 / board.GetWalkSpeed(adjacents[i], movementType));
@@ -119,7 +121,7 @@ namespace Assets.Scripts.AI
                     continue;
                 }
 
-                List<Indice> adjacents = board.GetAdjacentTiles(current.Here.X, current.Here.Y);
+                List<Indice> adjacents = board.GetAdjTile(current.Here.X, current.Here.Y);
                 for (int i = 0; i < adjacents.Count; i++)
                 {
                     Node processing = new Node(adjacents[i], current.Here, 1 / board.GetWalkSpeed(adjacents[i], movementType));
@@ -181,7 +183,7 @@ namespace Assets.Scripts.AI
                     continue;
                 }
 
-                List<Indice> adjacents = board.GetAdjacentTiles(current.Here.X, current.Here.Y);
+                List<Indice> adjacents = board.GetAdjTile(current.Here.X, current.Here.Y);
                 for (int i = 0; i < adjacents.Count; i++)
                 {
                     Node processing = new Node(adjacents[i], current.Here, 1 / board.GetWalkSpeed(adjacents[i], movementType));
@@ -286,7 +288,7 @@ namespace Assets.Scripts.AI
 
                 if (current.Here == end) return true;
 
-                List<Indice> adjacents = board.GetAdjacentTiles(current.Here.X, current.Here.Y);
+                List<Indice> adjacents = board.GetAdjTile(current.Here.X, current.Here.Y);
                 for (int i = 0; i < adjacents.Count; i++)
                 {
                     Node processing = new Node(adjacents[i], current.Here, 1 / board.GetWalkSpeed(adjacents[i], movementType));

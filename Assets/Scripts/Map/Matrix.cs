@@ -131,7 +131,7 @@ namespace Assets.Scripts.Map
 
         public void CalculateUnitMovementRange(Unit unit)
         {
-            unit.SetMovementRange(Dijkstra.TilesWithinDistance(this, unit.CurrentTileCoords, unit.MovementType, unit.Movement));
+            unit.SetMovementRange(Dijkstra.TilesWithinDistance(this, unit.CurrentTileCoords, unit.MovementType, unit.WalkRange));            
         }       
 
         //public void CalculateUnitAttackRange(Unit unit)
@@ -238,7 +238,7 @@ namespace Assets.Scripts.Map
 
                 foreach (var t in tilesInRange)
                 {
-                    bool result = Dijkstra.IsWithinDistance(this, unit.CurrentTileCoords, t, unit.MovementType, unit.Movement);
+                    bool result = Dijkstra.IsWithinDistance(this, unit.CurrentTileCoords, t, unit.MovementType, unit.WalkRange);
 
                     if (result)
                     {
@@ -291,7 +291,7 @@ namespace Assets.Scripts.Map
 
             for (int i = 0; i < range.Count; i++)
             {
-                if (!Dijkstra.IsWithinDistance(this, unit.CurrentTileCoords, range[i], unit.MovementType, unit.Movement) || !CanMoveTo(unit.CurrentTileCoords, range[i]))
+                if (!Dijkstra.IsWithinDistance(this, unit.CurrentTileCoords, range[i], unit.MovementType, unit.WalkRange) || !CanMoveTo(unit.CurrentTileCoords, range[i]))
                 {
                     range.RemoveAt(i);
                     i--;
@@ -301,7 +301,7 @@ namespace Assets.Scripts.Map
             return range;
         }
 
-        private List<Indice> GetAdjTile(int x, int y)
+        public List<Indice> GetAdjTile(int x, int y)
         {
             //List<Indice> adjacents;
             List<Indice> adjacents = new List<Indice>(6);
@@ -378,7 +378,7 @@ namespace Assets.Scripts.Map
                     adjacents.Add(p);
             }
 
-            adjacents.RemoveAll(p => p.X < 0 || p.X > _width - 1 || p.Y < 0 || p.Y > _height - 1);
+            //adjacents.RemoveAll(p => p.X < 0 || p.X > _width - 1 || p.Y < 0 || p.Y > _height - 1);
 
             return adjacents;
         }
@@ -397,7 +397,7 @@ namespace Assets.Scripts.Map
                 case MovementType.IgnoreAll:
                     return 1;
                 case MovementType.Foot:
-                    return tiles[p.X, p.Y].WalkSpeed;
+                    return _matrix[p.X, p.Y].WalkCost;
                 default:
                     return 1;
             }

@@ -9,7 +9,7 @@ using Assets.Scripts.SupportClasses;
 using Assets.Scripts.AI;
 
 namespace Assets.Scripts.Player
-{ 
+{
     public class Unit : MonoBehaviour, IDeselect
     {
         const int MAXHP = 50;
@@ -109,7 +109,7 @@ namespace Assets.Scripts.Player
                 //statsManager.SetHpBar(CurrentMp());
             }
         }
-        
+
         StatsManager statsManager;
 
         private SpriteRenderer _spriteRender;
@@ -117,7 +117,7 @@ namespace Assets.Scripts.Player
         private GameObject _actionMenu;
         private UnitClass _class;
         private UnitOwner _owner;
-        private bool _isActionMenuActive;        
+        private bool _isActionMenuActive;
         private bool _isSelected;
         private Vector2 _lastPos;
         /// <summary>
@@ -126,7 +126,7 @@ namespace Assets.Scripts.Player
         private float _walkRange;
         private List<Indice> _inRangeCoords;
         private List<Indice> _enemyInRange;
-        
+
         /// <summary>
         /// Array de itens disponiveis para a unidade
         /// </summary>
@@ -152,20 +152,20 @@ namespace Assets.Scripts.Player
 
             _walkRange = 2;
             _atributes = new Atributes(50f, 0, 30, 0, 15, 10, 0.3f, 0.5f, 0.4f, 5);
-                       
+
             _class = UnitClass.Archer;
             //_owner = UnitOwner.Player;
 
             MainLoop.Instance().interfaceList.Add(this);
         }
-        
+
         private void Update()
         {
             if (_lastPos != (Vector2)transform.position)
             {
                 DeactivateActionMenu();
                 _lastPos = transform.position;
-            }            
+            }
         }
 
         public void OnMouseOver()
@@ -181,10 +181,10 @@ namespace Assets.Scripts.Player
         }
 
         public void OnMouseDown()
-        {            
+        {
             SelectUnit();
             DeactivateActionMenu();
-            SetStatsValues();            
+            SetStatsValues();
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Assets.Scripts.Player
         public void SetPosition(Vector2 newPos, int x, int y)
         {
             transform.position = newPos;
-            _indice.SetIndice(x, y);           
+            _indice.SetIndice(x, y);
         }
         public void AddTileToRange(int x, int y)
         {
@@ -260,10 +260,10 @@ namespace Assets.Scripts.Player
             _inRangeCoords.Clear();
         }
 
-        public void ResetAttackRange()
-        {
-            _enemyInRange.Clear();
-        }
+        //public void ResetAttackRange()
+        //{
+        //    _enemyInRange.Clear();
+        //}
 
         public void SetActionMenu(GameObject actionMenu)
         {
@@ -279,24 +279,24 @@ namespace Assets.Scripts.Player
         {
             _isSelected = true;
             SelectUnit();
-            statsManager.IsActive(_isSelected);            
+            statsManager.IsActive(_isSelected);
         }
 
-        public void AddTileToAttackRange(int x, int y)
-        {
-            Indice indice = new Indice(x, y);
+        //public void AddTileToAttackRange(int x, int y)
+        //{
+        //    Indice indice = new Indice(x, y);
 
-            if (!_enemyInRange.Contains(indice))
-            {
-                _enemyInRange.Add(indice);
-            }
-        }
+        //    if (!_enemyInRange.Contains(indice))
+        //    {
+        //        _enemyInRange.Add(indice);
+        //    }
+        //}
 
         public Vector2 Position
         {
-            get { return this.transform.position; }            
+            get { return this.transform.position; }
         }
-        
+
         public float WalkRange
         {
             get { return _walkRange; }
@@ -320,7 +320,22 @@ namespace Assets.Scripts.Player
         {
             get { return _class; }
         }
+        public float UnityHP
+        {
+            get { return _atributes.GetHealthValue; }
+        }
 
+        public float Attack
+        {
+            get { return _atributes.GetAttackValue; }
+        }
+
+        public float Defense
+        {
+            get { return _atributes.GetArmorValue; }
+        }
+             
+        ///----- new stuff
         private MovementType movementType;
         private Faction faction;
         private Indice currentTileCoords;
@@ -360,8 +375,7 @@ namespace Assets.Scripts.Player
         {
             inMovementRangeCoords.Clear();
         }
-
-        ///----- new stuff
+        
         public void AddTileToAttackRange(int x, int y)
         {
             Indice p = new Indice(x, y);
@@ -406,19 +420,19 @@ namespace Assets.Scripts.Player
                     break;
                 case FactionRelationship.Hostile:
                     interactionType = InteractionType.Battle;
+                                        
+                    damageDealt = initiator._atributes.GetAttackValue - defender._atributes.GetArmorValue;
 
-                    damageDealt = initiator.attack - defender.defense;
-
-                    if (defender.hp - damageDealt <= 0)
+                    if (defender._atributes.GetHealthValue - damageDealt <= 0)
                     {
                         damageTaken = 0;
                         victory = 1;
                     }
                     else
                     {
-                        damageTaken = defender.attack - initiator.defense;
+                        damageTaken = defender._atributes.GetAttackValue - initiator._atributes.GetArmorValue;
 
-                        if (initiator.hp - damageTaken <= 0)
+                        if (initiator._atributes.GetHealthValue - damageTaken <= 0)
                         {
                             victory = -1;
                         }
@@ -445,11 +459,23 @@ namespace Assets.Scripts.Player
                     break;
                 case FactionRelationship.Hostile:
 
-                    defender.hp -= initiator.attack - defender.defense;
+                    initiator.MovementType = MovementType.Attack;
+                    defender.MovementType = MovementType.Defense;
 
-                    if (defender.hp <= 0) return;
+                    int demage;
 
-                    initiator.hp -= defender.attack - initiator.defense;
+                    demage = initiator._atributes.GetAttackValue - defender._atributes.GetArmorValue;
+                    defender._atributes.ApplyDamage(demage);
+
+                    if (defender._atributes.GetHealthValue <= 0) return;
+
+                    initiator.MovementType = MovementType.Defense;
+                    defender.MovementType = MovementType.Attack;
+
+                    demage = defender._atributes.GetAttackValue - initiator._atributes.GetArmorValue;
+
+                    initiator._atributes.ApplyDamage(demage);
+
                     break;
                 default:
                     break;

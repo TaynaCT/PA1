@@ -88,10 +88,10 @@ namespace Assets.Scripts.AI
 
                                 Call to movement function goes here.
                                 Replace with proper function.
-
+                                
                                 ------------------------------- */
 
-                                board.MoveUnit(current.Key, target);
+                                board.MoveUnit(current.Key, target); // movimento
 
                                 /* -------------------------------
 
@@ -100,14 +100,14 @@ namespace Assets.Scripts.AI
 
                                 ------------------------------- */
 
-                                Unit.Interact(current.Key, unitToAttack);
+                                Unit.Interact(current.Key, unitToAttack); //ataque
 
-                                if (current.Key.Hp <= 0)
+                                if (current.Key.UnityHP <= 0)
                                 {
                                     board.RemoveUnit(current.Key);
                                 }
 
-                                if (unitToAttack.Hp <= 0)
+                                if (unitToAttack.UnityHP <= 0)
                                 {
                                     board.RemoveUnit(unitToAttack);
                                 }
@@ -163,7 +163,7 @@ namespace Assets.Scripts.AI
 
                                             Indice target = Dijkstra.GetLastTileInRange(board,
                                                 Dijkstra.GetShortestPath(board, current.Key.CurrentTileCoords, unitToAttack.CurrentTileCoords, current.Key.MovementType),
-                                                current.Key.MovementType, current.Key.Movement);
+                                                current.Key.MovementType, current.Key.WalkRange);
 
                                             /* -------------------------------
 

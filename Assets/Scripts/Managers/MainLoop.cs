@@ -97,7 +97,8 @@ namespace Assets.Scripts.Managers
         {
             Debug.Log("Enters");
 
-            _map.CalculateUnitRange(UnitPlayer);
+            // _map.CalculateUnitRange(UnitPlayer);
+            _map.CalculateUnitMovementRange(UnitPlayer);
 
             for (int y = 0; y < _map.MatrixHeight; y++)
             {
