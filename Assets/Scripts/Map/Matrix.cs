@@ -131,7 +131,7 @@ namespace Assets.Scripts.Map
 
         public void CalculateUnitMovementRange(Unit unit)
         {
-            unit.SetMovementRange(Dijkstra.TilesWithinDistance(this, unit.CurrentTileCoords, unit.MovementType, unit.WalkRange));            
+            unit.SetMovementRange(Dijkstra.TilesWithinDistance(this, unit.CurrentTileCoords, unit.MovementType, unit.Movement));            
         }       
 
         //public void CalculateUnitAttackRange(Unit unit)
@@ -238,7 +238,7 @@ namespace Assets.Scripts.Map
 
                 foreach (var t in tilesInRange)
                 {
-                    bool result = Dijkstra.IsWithinDistance(this, unit.CurrentTileCoords, t, unit.MovementType, unit.WalkRange);
+                    bool result = Dijkstra.IsWithinDistance(this, unit.CurrentTileCoords, t, unit.MovementType, unit.Movement);
 
                     if (result)
                     {
@@ -291,7 +291,7 @@ namespace Assets.Scripts.Map
 
             for (int i = 0; i < range.Count; i++)
             {
-                if (!Dijkstra.IsWithinDistance(this, unit.CurrentTileCoords, range[i], unit.MovementType, unit.WalkRange) || !CanMoveTo(unit.CurrentTileCoords, range[i]))
+                if (!Dijkstra.IsWithinDistance(this, unit.CurrentTileCoords, range[i], unit.MovementType, unit.Movement) || !CanMoveTo(unit.CurrentTileCoords, range[i]))
                 {
                     range.RemoveAt(i);
                     i--;
@@ -417,7 +417,7 @@ namespace Assets.Scripts.Map
             {
                 return true;
             }
-
+            
             for (int i = 0; i < units.Count; i++)
             {
                 if (units[i].CurrentTileCoords == position)

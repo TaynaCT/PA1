@@ -163,7 +163,7 @@ namespace Assets.Scripts.AI
 
                                             Indice target = Dijkstra.GetLastTileInRange(board,
                                                 Dijkstra.GetShortestPath(board, current.Key.CurrentTileCoords, unitToAttack.CurrentTileCoords, current.Key.MovementType),
-                                                current.Key.MovementType, current.Key.WalkRange);
+                                                current.Key.MovementType, current.Key.Movement);
 
                                             /* -------------------------------
 

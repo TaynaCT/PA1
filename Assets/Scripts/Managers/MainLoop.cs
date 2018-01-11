@@ -49,14 +49,14 @@ namespace Assets.Scripts.Managers
 
             UnitPlayer.SetActionMenu(ActionMenuCanvas);
             UnitPlayer.SetMoveButton(MoveButton);
-            UnitPlayer.Indice.SetIndice(2, 3);
+            UnitPlayer.CurrentTileCoords.SetIndice(2, 3);
             UnitPlayer.Faction = Faction.Player0;
 
             Enemy = GameObject.Instantiate((GameObject)Resources.Load("UnitEnemy"), enemyInicialPos, Quaternion.identity).GetComponent<Unit>();
 
             Enemy.SetActionMenu(ActionMenuCanvas);
             Enemy.SetMoveButton(MoveButton);
-            Enemy.Indice.SetIndice(6, 6);
+            Enemy.CurrentTileCoords.SetIndice(6, 6);
             Enemy.Faction = Faction.World0Enemy;
 
         }
@@ -122,7 +122,7 @@ namespace Assets.Scripts.Managers
                     if (UnitPlayer.InMovementRangeCoords.Contains(p) /*UnitPlayer.InRangeCoordsList.Contains(p)*/)
                     {
                         Debug.Log("ContemP!!!! ");
-                        Debug.Log(UnitPlayer.InRangeCoordsList.Contains(p));
+                        Debug.Log(UnitPlayer.InMovementRangeCoords.Contains(p));
                         _map.GetMatrixCell(p.X, p.Y).HighLight();
                     }
                 }

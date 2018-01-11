@@ -123,20 +123,20 @@ namespace Assets.Scripts.Player
         /// <summary>
         /// Range do movimento da unidade atual
         /// </summary>
-        private float _walkRange;
-        private List<Indice> _inRangeCoords;
-        private List<Indice> _enemyInRange;
+        private float _movement;
+        private List<Indice> _inMovementRangeCoords;
+        private List<Indice> _inAttackRangeCoords;
 
         /// <summary>
         /// Array de itens disponiveis para a unidade
         /// </summary>
         private GameObject[] _itens;
         private Atributes _atributes;
-        private Indice _indice;
+        private Indice currentTileCoords;
 
         public void Awake()
         {
-            _indice = new Indice();
+            currentTileCoords = new Indice();
         }
         void Start()
         {
@@ -145,12 +145,12 @@ namespace Assets.Scripts.Player
             this.gameObject.tag = "Unit";
             _isSelected = false;
             _lastPos = transform.position;
-            _inRangeCoords = new List<Indice>();
+            _inMovementRangeCoords = new List<Indice>();
             _itens = new GameObject[3];
             _spriteRender = GetComponent<SpriteRenderer>();
             statsManager = MainLoop.Instance().StatsManager;
 
-            _walkRange = 2;
+            _movement = 2;
             _atributes = new Atributes(50f, 0, 30, 0, 15, 10, 0.3f, 0.5f, 0.4f, 5);
 
             _class = UnitClass.Archer;
@@ -192,7 +192,7 @@ namespace Assets.Scripts.Player
         /// </summary>
         public void SetUnitIndice(int x, int y)
         {
-            _indice.SetIndice(x, y);
+            MoveTo(new Indice(x, y));
         }
 
         private void SetStatsValues()
@@ -244,20 +244,20 @@ namespace Assets.Scripts.Player
         public void SetPosition(Vector2 newPos, int x, int y)
         {
             transform.position = newPos;
-            _indice.SetIndice(x, y);
+            currentTileCoords.SetIndice(x, y);
         }
         public void AddTileToRange(int x, int y)
         {
             Indice indice = new Indice(x, y);
-            if (!_inRangeCoords.Contains(indice))
+            if (!_inMovementRangeCoords.Contains(indice))
             {
-                _inRangeCoords.Add(indice);
+                _inMovementRangeCoords.Add(indice);
             }
         }
 
         public void ResetRange()
         {
-            _inRangeCoords.Clear();
+            _inMovementRangeCoords.Clear();
         }
 
         //public void ResetAttackRange()
@@ -297,24 +297,24 @@ namespace Assets.Scripts.Player
             get { return this.transform.position; }
         }
 
-        public float WalkRange
+        public float Movement
         {
-            get { return _walkRange; }
-            set { _walkRange = value; }
+            get { return _movement; }
+            set { _movement = value; }
         }
-        public List<Indice> InRangeCoordsList
+        public List<Indice> InMovementRangeCoords
         {
-            get { return _inRangeCoords; }
-        }
-
-        public List<Indice> EnemyInRange
-        {
-            get { return _enemyInRange; }
+            get { return _inMovementRangeCoords; }
         }
 
-        public Indice Indice
+        public List<Indice> InAttackRangeCoords
         {
-            get { return _indice; }
+            get { return _inAttackRangeCoords; }
+        }
+
+        public Indice CurrentTileCoords
+        {
+            get { return currentTileCoords; }
         }
         public UnitClass UnitClass
         {
@@ -338,14 +338,8 @@ namespace Assets.Scripts.Player
         ///----- new stuff
         private MovementType movementType;
         private Faction faction;
-        private Indice currentTileCoords;
         private Indice previousTileCoords;
-        private List<Indice> inMovementRangeCoords;
-        private List<Indice> inAttackRangeCoords;
-
-        public Indice CurrentTileCoords { get { return currentTileCoords; } }
-        public List<Indice> InMovementRangeCoords { get { return inMovementRangeCoords; } }
-        public List<Indice> InAttackRangeCoords { get { return inAttackRangeCoords; } }
+        
         public UnitBehaviour Behaviour { get { return behaviour; } set { behaviour = value; } }
         public bool FinishedTurn { get { return finishedTurn; } set { finishedTurn = value; } }
         public MovementType MovementType { get { return movementType; } set { movementType = value; } }
@@ -355,40 +349,40 @@ namespace Assets.Scripts.Player
         {
             Indice p = new Indice(x, y);
 
-            if (!inMovementRangeCoords.Contains(p) && p != currentTileCoords)
+            if (!_inMovementRangeCoords.Contains(p) && p != currentTileCoords)
             {
-                inMovementRangeCoords.Add(p);
+                _inMovementRangeCoords.Add(p);
             }
         }
 
         public void SetMovementRange(List<Indice> range)
         {
-            inMovementRangeCoords = range;
+            _inMovementRangeCoords = range;
         }
 
         public void SetAttackRange(List<Indice> range)
         {
-            inAttackRangeCoords = range;
+            _inAttackRangeCoords = range;
         }
 
         public void ResetMovementRange()
         {
-            inMovementRangeCoords.Clear();
+            _inMovementRangeCoords.Clear();
         }
         
         public void AddTileToAttackRange(int x, int y)
         {
             Indice p = new Indice(x, y);
 
-            if (!inAttackRangeCoords.Contains(p))
+            if (!_inAttackRangeCoords.Contains(p))
             {
-                inAttackRangeCoords.Add(p);
+                _inAttackRangeCoords.Add(p);
             }
         }
 
         public void ResetAttackRange()
         {
-            inAttackRangeCoords.Clear();
+            _inAttackRangeCoords.Clear();
         }
 
         public void ReturnToPreviousCoords()

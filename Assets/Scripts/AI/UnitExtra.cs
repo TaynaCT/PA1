@@ -20,7 +20,7 @@ namespace Assets.Scripts.AI
         {
             return new UnitExtra
             {
-                priority = u.WalkRange * (u.Attack + u.Defense + u.UnityHP),
+                priority = u.Movement * (u.Attack + u.Defense + u.UnityHP),
                 inRange = new List<Unit>(),
                 waitTurns = 0
             };
