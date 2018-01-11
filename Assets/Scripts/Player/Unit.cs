@@ -136,7 +136,7 @@ namespace Assets.Scripts.Player
 
         public void Awake()
         {
-            currentTileCoords = new Indice();
+            currentTileCoords = new Indice(0, 0);
         }
         void Start()
         {
@@ -155,6 +155,7 @@ namespace Assets.Scripts.Player
             SetStatsValues();
 
             _class = UnitClass.Archer;
+            movementType = MovementType.Foot;
             //_owner = UnitOwner.Player;
 
             MainLoop.Instance().interfaceList.Add(this);

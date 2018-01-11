@@ -56,7 +56,7 @@ namespace Assets.Scripts.Managers
             UnitPlayer.SetMoveButton(MoveButton);
             UnitPlayer.CurrentTileCoords.SetIndice(2, 3);
             UnitPlayer.Faction = Faction.Player0;
-            UnitPlayer.Behaviour = UnitBehaviour.Defender;
+            UnitPlayer.Behaviour = UnitBehaviour.AttackerAgressive;
 
             Enemy = GameObject.Instantiate((GameObject)Resources.Load("UnitEnemy"), enemyInicialPos, Quaternion.identity).GetComponent<Unit>();
 
@@ -83,6 +83,7 @@ namespace Assets.Scripts.Managers
         void Update()
         {
             //UnitPlayer.SetText(UnitText);
+           
         }
 
         public void Deselect()
@@ -103,7 +104,7 @@ namespace Assets.Scripts.Managers
 
         public void AttackUnit()
         {
-
+            Unit.Interact(UnitPlayer, Enemy);
         }
 
         public void ExitGame()

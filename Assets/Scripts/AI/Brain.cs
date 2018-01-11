@@ -166,11 +166,17 @@ namespace Assets.Scripts.AI
                                         if (unitsInRange.Count > 0)
                                         {
                                             Unit unitToAttack = unitsInRange.Aggregate((a, b) => BattleEvaluation(a.Value) < BattleEvaluation(b.Value) ? b : a).Key;
-
+                                            Debug.Log("unit to attack selected");
+                                            Debug.Log(board);
+                                            Debug.Log(current.Key.CurrentTileCoords.ToString());
+                                            Debug.Log(unitToAttack.CurrentTileCoords.ToString());
+                                            Debug.Log(current.Key.MovementType);
+                                            List<Indice> path = Dijkstra.GetShortestPath(board, current.Key.CurrentTileCoords, unitToAttack.CurrentTileCoords, current.Key.MovementType);
+                                            Debug.Log("path selected");
                                             Indice target = Dijkstra.GetLastTileInRange(board,
-                                                Dijkstra.GetShortestPath(board, current.Key.CurrentTileCoords, unitToAttack.CurrentTileCoords, current.Key.MovementType),
+                                                path,
                                                 current.Key.MovementType, current.Key.Movement);
-
+                                            Debug.Log("target selected");
                                             /* -------------------------------
 
                                             Call to movement function goes here.
@@ -215,10 +221,8 @@ namespace Assets.Scripts.AI
 
                                 ------------------------------- */
                             }
-                            else
-                            {
-                                unitList.Remove(current.Key);
-                            }
+
+                            unitList.Remove(current.Key);
                             break;
                         }
                     default:
@@ -226,13 +230,14 @@ namespace Assets.Scripts.AI
                         break;
                 }
 
-                Debug.Log("end");
+                Debug.Log("end unit processing");
 
                 if (executeWithDelays)
                 {
                     Thread.Sleep(delay);
                 }
             }
+            Debug.Log("end");
         }
 
         private static int BattleEvaluation(InteractionSimulationResults results)

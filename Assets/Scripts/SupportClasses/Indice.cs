@@ -5,39 +5,45 @@ using UnityEngine;
 
 namespace Assets.Scripts.SupportClasses
 {
-    public class Indice : IEquatable<Indice>
+    public class Indice
     {
-        private int _indiceX;
-        private int _indiceY;
-
-        public Indice()
-        {            
-        }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Indice(int x, int y)
         {
-            _indiceX = x;
-            _indiceY = y;
-        }
-
-        public int X
-        {
-            get { return _indiceX; }
-        }
-        public int Y
-        {
-            get { return _indiceY; }
+            X = x;
+            Y = y;
         }
 
         public void SetIndice(int x, int y)
         {
-            _indiceX = x;
-            _indiceY = y;
+            X = x;
+            Y = y;
         }
 
         public bool Equals(Indice other)
         {
-            return _indiceX == other.X && _indiceY == other.Y;
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object other)
+        {
+            return (other is Indice) ? Equals((Indice)other) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return X ^ Y;
+        }
+
+        public static bool operator ==(Indice left, Indice right) { return left.X == right.X && left.Y == right.Y; }
+
+        public static bool operator !=(Indice left, Indice right) { return !(left == right); }
+
+        public override string ToString()
+        {
+            return string.Format("{{X:{0} Y:{1}}}", X, Y);
         }
     }
 }
