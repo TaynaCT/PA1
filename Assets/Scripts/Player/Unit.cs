@@ -152,6 +152,7 @@ namespace Assets.Scripts.Player
 
             _movement = 2;
             _atributes = new Atributes(50f, 0, 30, 0, 15, 10, 0.3f, 0.5f, 0.4f, 5);
+            SetStatsValues();
 
             _class = UnitClass.Archer;
             //_owner = UnitOwner.Player;

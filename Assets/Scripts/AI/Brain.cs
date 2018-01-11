@@ -25,8 +25,10 @@ namespace Assets.Scripts.AI
             //List<UnitExtra> unitList = board.Units.Where(u => u.Faction == faction).Select(u => UnitExtra.FromUnit(u)).ToList();
             Dictionary<Unit, UnitExtra> unitList = board.Units.Where(u => u.Faction == faction && !u.FinishedTurn).ToDictionary(x => x, x => UnitExtra.FromUnit(x));
 
+            Debug.Log("start");
             while (unitList.Count > 0)
             {
+                Debug.Log("units left: " + unitList.Count);
                 var current = unitList.First();
 
                 foreach (var item in unitList)
@@ -37,7 +39,11 @@ namespace Assets.Scripts.AI
                     }
                 }
 
+                Debug.Log("priority calculated");
+
                 Dictionary<Unit, InteractionSimulationResults> unitsInRange;
+
+                Debug.Log("behaviour: " + current.Key.Behaviour.ToString());
 
                 // Switch between unit behaviours.
                 switch (current.Key.Behaviour)
@@ -196,9 +202,9 @@ namespace Assets.Scripts.AI
                     case UnitBehaviour.Defender:
                         {
                             board.CalculateUnitAttackRange(current.Key);
-
+                            Debug.Log("range calculated");
                             unitsInRange = board.UnitsInTiles(current.Key.InAttackRangeCoords).ToDictionary(k => k, v => new InteractionSimulationResults()); ;
-
+                            Debug.Log("units calculated: " + unitsInRange.Count);
                             if (unitsInRange.Count > 0)
                             {
                                 Unit unitToAttack = unitsInRange.Aggregate((a, b) => BattleEvaluation(a.Value) < BattleEvaluation(b.Value) ? b : a).Key;
@@ -219,6 +225,8 @@ namespace Assets.Scripts.AI
                         unitList.Remove(current.Key);
                         break;
                 }
+
+                Debug.Log("end");
 
                 if (executeWithDelays)
                 {

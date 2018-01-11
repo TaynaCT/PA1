@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.Interface;
 using Assets.Scripts.SupportClasses;
+using Assets.Scripts.AI;
+using System.Threading;
 
 namespace Assets.Scripts.Managers
 {
@@ -22,7 +24,7 @@ namespace Assets.Scripts.Managers
             Debug.Log("Is Null!!");
             return null;
         }
-
+        
         public StatsManager StatsManager;
         public GameObject ActionMenuCanvas;
         public GameObject MoveButton;
@@ -33,11 +35,14 @@ namespace Assets.Scripts.Managers
         private Matrix _map;
         private GameObject _actionMenu;
         private bool _isActionMenuActive;
+        private Thread aiThread;
 
         public List<IDeselect> interfaceList = new List<IDeselect>();
 
         public void Awake()
         {
+            List<Unit> units = new List<Unit>();
+
             //definir o tamanho do mapa
             _map = new Matrix(24, 16);
 
@@ -51,6 +56,7 @@ namespace Assets.Scripts.Managers
             UnitPlayer.SetMoveButton(MoveButton);
             UnitPlayer.CurrentTileCoords.SetIndice(2, 3);
             UnitPlayer.Faction = Faction.Player0;
+            UnitPlayer.Behaviour = UnitBehaviour.Defender;
 
             Enemy = GameObject.Instantiate((GameObject)Resources.Load("UnitEnemy"), enemyInicialPos, Quaternion.identity).GetComponent<Unit>();
 
@@ -58,6 +64,12 @@ namespace Assets.Scripts.Managers
             Enemy.SetMoveButton(MoveButton);
             Enemy.CurrentTileCoords.SetIndice(6, 6);
             Enemy.Faction = Faction.World0Enemy;
+            Enemy.Behaviour = UnitBehaviour.Defender;
+
+            units.Add(Enemy);
+            units.Add(UnitPlayer);
+
+            _map.Units = units;
 
         }
 
@@ -89,6 +101,11 @@ namespace Assets.Scripts.Managers
             UnitPlayer.SetPosition(newPos, indiceX, indiceY);
         }
 
+        public void AttackUnit()
+        {
+
+        }
+
         public void ExitGame()
         {
             SceneManager.LoadScene("StartMenu");
@@ -100,6 +117,14 @@ namespace Assets.Scripts.Managers
              * 
              * change Actualplayer
              * */
+            Debug.Log("starting AI");
+            aiThread = new Thread(() => Brain.ProcessTurn(_map, Faction.Player0));
+            aiThread.IsBackground = true;
+            if (!aiThread.IsAlive)
+            {
+                aiThread.Start();
+            }
+            Debug.Log("ending AI");
         }
 
         /// <summary>
