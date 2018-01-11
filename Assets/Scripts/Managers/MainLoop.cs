@@ -64,7 +64,7 @@ namespace Assets.Scripts.Managers
             Enemy.SetMoveButton(MoveButton);
             Enemy.CurrentTileCoords.SetIndice(6, 6);
             Enemy.Faction = Faction.World0Enemy;
-            Enemy.Behaviour = UnitBehaviour.Defender;
+            Enemy.Behaviour = UnitBehaviour.AttackerAgressive;
 
             units.Add(Enemy);
             units.Add(UnitPlayer);
@@ -119,12 +119,7 @@ namespace Assets.Scripts.Managers
              * change Actualplayer
              * */
             Debug.Log("starting AI");
-            aiThread = new Thread(() => Brain.ProcessTurn(_map, Faction.Player0));
-            aiThread.IsBackground = true;
-            if (!aiThread.IsAlive)
-            {
-                aiThread.Start();
-            }
+            Brain.ProcessTurn(_map, Faction.World0Enemy);
             Debug.Log("ending AI");
         }
 

@@ -396,6 +396,7 @@ namespace Assets.Scripts.Player
         {
             previousTileCoords = currentTileCoords;
             currentTileCoords = position;
+            SetPosition(Matrix.GetVectorFromIndice(position), position.X, position.Y);
         }
 
         public static InteractionSimulationResults SimulateInteraction(Unit initiator, Unit defender)

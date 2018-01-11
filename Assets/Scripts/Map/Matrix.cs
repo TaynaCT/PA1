@@ -433,5 +433,10 @@ namespace Assets.Scripts.Map
             units.Remove(unit);
         }
 
+        public static Vector2 GetVectorFromIndice(Indice indice)
+        {
+            if (indice.Y % 2 == 0) return new Vector2(1.12f * indice.X - 9, 0.95f * indice.Y - 4);
+            else return new Vector2(1.12f * indice.X - 8.44f, 0.95f * indice.Y - 4);
+        }
     }
 }
