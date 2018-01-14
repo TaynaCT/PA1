@@ -120,6 +120,10 @@ namespace Assets.Scripts.Player
         private bool _isActionMenuActive;
         private bool _isSelected;
         private Vector2 _lastPos;
+        private MovementType movementType;
+        private Faction faction;
+        private Indice previousTileCoords;
+
         /// <summary>
         /// Range do movimento da unidade atual
         /// </summary>
@@ -335,12 +339,7 @@ namespace Assets.Scripts.Player
         public float Defense
         {
             get { return _atributes.GetArmorValue; }
-        }
-             
-        ///----- new stuff
-        private MovementType movementType;
-        private Faction faction;
-        private Indice previousTileCoords;
+        }    
         
         public UnitBehaviour Behaviour { get { return behaviour; } set { behaviour = value; } }
         public bool FinishedTurn { get { return finishedTurn; } set { finishedTurn = value; } }

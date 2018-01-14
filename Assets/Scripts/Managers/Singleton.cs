@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+namespace Assets.Scripts.Managers
 {
-    public static T Instance { get; private set; }
-
-    protected void Awake()
+    public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        if (Instance == null)
+        public static T Instance { get; private set; }
+
+        protected void Awake()
         {
-            Instance = this as T;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
+            if (Instance == null)
+            {
+                Instance = this as T;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

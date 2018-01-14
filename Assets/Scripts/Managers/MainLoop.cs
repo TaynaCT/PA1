@@ -41,6 +41,7 @@ namespace Assets.Scripts.Managers
 
         public void Awake()
         {
+            _instance = this;
             List<Unit> units = new List<Unit>();
 
             //definir o tamanho do mapa
@@ -76,14 +77,13 @@ namespace Assets.Scripts.Managers
         // Use this for initialization
         void Start()
         {
-            _instance = this;
+            //_instance = this;
         }
 
         // Update is called once per frame
         void Update()
         {
-            //UnitPlayer.SetText(UnitText);
-           
+            //UnitPlayer.SetText(UnitText);           
         }
 
         public void Deselect()
