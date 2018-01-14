@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class GameSparksSingleton : Singleton<GameSparksSingleton>
+namespace Assets.Scripts.Managers
 {
-}
+    public class GameSparksSingleton : Singleton<GameSparksSingleton>
+    {
+    }
 
+}

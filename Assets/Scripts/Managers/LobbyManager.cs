@@ -63,6 +63,7 @@ namespace Assets.Scripts.Managers
 
         private void OnLoginSuccess(AuthenticationResponse response)
         {
+            Debug.Log("OnLoginSuccess!!!!!");
             LoginButton.gameObject.SetActive(false);
             RegisterButton.gameObject.SetActive(false);
             UsernameInput.gameObject.SetActive(false);

@@ -45,7 +45,7 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        public FactionNames[] PlayerUnits { get; private set; }
+        //public FactionNames[] PlayerUnits { get; private set; }
 
         private void OnChallengeStarted(ChallengeStartedMessage message)
         {
@@ -56,7 +56,7 @@ namespace Assets.Scripts.Managers
             Faction02PlayerName = message.Challenge.Challenged.First().Name;
             Faction02PlayerId = message.Challenge.Challenged.First().Id;
             CurrentPlayerName = message.Challenge.NextPlayer == Faction01PlayerId ? Faction01PlayerName : Faction02PlayerName;
-            PlayerUnits = message.Challenge.ScriptData.GetIntList("PlayerUnits").Cast<PieceType>
+            //PlayerUnits = message.Challenge.ScriptData.GetIntList("PlayerUnits").Cast<PieceType>
         }
     }
 }

@@ -34,7 +34,7 @@ public class LoginPanel : MonoBehaviour
 
     private void OnLoginSuccess(AuthenticationResponse response)
     {
-        LoadingManager.Instance.LoadNextScene();
+        //LoadingManager.Instance.LoadNextScene();
     }
 
     private void OnLoginError(AuthenticationResponse response)
