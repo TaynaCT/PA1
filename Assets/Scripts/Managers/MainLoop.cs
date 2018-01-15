@@ -31,11 +31,13 @@ namespace Assets.Scripts.Managers
         
         public Unit UnitPlayer;
         public Unit Enemy;
-        
+        public List<Unit> Player0;
+        public List<Unit> Player1;
         private Matrix _map;
         private GameObject _actionMenu;
         private bool _isActionMenuActive;
         private Thread aiThread;
+        public MatchType Match { get;  set; }
 
         public List<IDeselect> interfaceList = new List<IDeselect>();
 
@@ -47,36 +49,75 @@ namespace Assets.Scripts.Managers
             //definir o tamanho do mapa
             _map = new Matrix(24, 16);
 
-            //Posições iniciais do player
-            Vector2 playerInicialPos = _map.GetMatrixCell(2, 3).transform.position;
-            Vector2 enemyInicialPos = _map.GetMatrixCell(6, 6).transform.position;
+            //if (Match == MatchType.SinglePlayer) {
+                //Posições iniciais do player
+                Vector2 playerInicialPos = _map.GetMatrixCell(2, 3).transform.position;
+                Vector2 enemyInicialPos = _map.GetMatrixCell(6, 6).transform.position;
 
-            UnitPlayer = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), playerInicialPos, Quaternion.identity).GetComponent<Unit>();
+                UnitPlayer = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), playerInicialPos, Quaternion.identity).GetComponent<Unit>();
 
-            UnitPlayer.SetActionMenu(ActionMenuCanvas);
-            UnitPlayer.SetMoveButton(MoveButton);
-            UnitPlayer.CurrentTileCoords.SetIndice(2, 3);
-            UnitPlayer.Faction = Faction.Player0;
-            UnitPlayer.Behaviour = UnitBehaviour.AttackerAgressive;
+                UnitPlayer.SetActionMenu(ActionMenuCanvas);
+                UnitPlayer.SetMoveButton(MoveButton);
+                UnitPlayer.CurrentTileCoords.SetIndice(2, 3);
+                UnitPlayer.Faction = Faction.Player0;
+                UnitPlayer.Behaviour = UnitBehaviour.AttackerAgressive;
 
-            Enemy = GameObject.Instantiate((GameObject)Resources.Load("UnitEnemy"), enemyInicialPos, Quaternion.identity).GetComponent<Unit>();
+                Enemy = GameObject.Instantiate((GameObject)Resources.Load("UnitEnemy"), enemyInicialPos, Quaternion.identity).GetComponent<Unit>();
 
-            Enemy.SetActionMenu(ActionMenuCanvas);
-            Enemy.SetMoveButton(MoveButton);
-            Enemy.CurrentTileCoords.SetIndice(6, 6);
-            Enemy.Faction = Faction.World0Enemy;
-            Enemy.Behaviour = UnitBehaviour.AttackerAgressive;
+                Enemy.SetActionMenu(ActionMenuCanvas);
+                Enemy.SetMoveButton(MoveButton);
+                Enemy.CurrentTileCoords.SetIndice(6, 6);
+                Enemy.Faction = Faction.World0Enemy;
+                Enemy.Behaviour = UnitBehaviour.AttackerAgressive;
 
-            units.Add(Enemy);
-            units.Add(UnitPlayer);
+                units.Add(Enemy);
+                units.Add(UnitPlayer);
 
-            _map.Units = units;
+                _map.Units = units;
+            
+            //else if(Match == MatchType.MultiPlayer) //multiplayer
+            //{
+            //    Player0 = new List<Unit>();
+            //    Player1 = new List<Unit>();
+            //    for (int i = 0; i < 3; i++){
+            //        Vector2 inicialPos =  _map.GetMatrixCell(2+i, 3+i).transform.position;
+            //        Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), inicialPos, Quaternion.identity).GetComponent<Unit>();
+
+            //        unit.SetActionMenu(ActionMenuCanvas);
+            //        unit.SetMoveButton(MoveButton);
+            //        unit.CurrentTileCoords.SetIndice(2+i, 3+i);
+            //        unit.Faction = Faction.Player0;
+
+            //        Player0.Add(unit);
+            //        units.Add(unit);
+            //    }
+
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        Vector2 inicialPos = _map.GetMatrixCell(_map.MatrixWidth - i, _map.MatrixHeight - i).transform.position;
+            //        Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitLucky"), inicialPos, Quaternion.identity).GetComponent<Unit>();
+
+            //        unit.SetActionMenu(ActionMenuCanvas);
+            //        unit.SetMoveButton(MoveButton);
+            //        unit.CurrentTileCoords.SetIndice(_map.MatrixWidth - i, _map.MatrixHeight - i);
+            //        unit.Faction = Faction.Player1;
+
+            //        Player1.Add(unit);
+            //        units.Add(unit);
+            //    }
+            //}
+            //else { Debug.Log("No Match"); }
 
         }
 
+        public Matrix GameMap
+        {
+            get { return _map; }
+        }
         // Use this for initialization
         void Start()
         {
+            Debug.Log(Match);
             //_instance = this;
         }
 
@@ -84,6 +125,12 @@ namespace Assets.Scripts.Managers
         void Update()
         {
             //UnitPlayer.SetText(UnitText);           
+        }
+
+        private int _packetSizeIncomming;
+        public void PacketReceived(int packetSize)
+        {
+            _packetSizeIncomming = packetSize;
         }
 
         public void Deselect()

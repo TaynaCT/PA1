@@ -14,6 +14,7 @@ namespace Assets.Scripts.SupportClasses
         public string Name { get { return name; } }
 
         public static Faction Player0 { get { return new Faction() { name = "Player0" }; } }
+        public static Faction Player1 { get { return new Faction() { name = "Player1" }; } }
         public static Faction World0Enemy { get { return new Faction() { name = "World0Enemy" }; } }
 
         // Remove ability to generate a new Faction that is not one of the existing ones.
@@ -37,6 +38,16 @@ namespace Assets.Scripts.SupportClasses
                     switch (b.Name)
                     {
                         case "World0Enemy":
+                            return FactionRelationship.Hostile;
+                        case "Player1":
+                            return FactionRelationship.Hostile;
+                        default:
+                            return FactionRelationship.Neutral;
+                    }
+                case "Player1":
+                    switch (b.Name)
+                    {
+                        case "Player0":
                             return FactionRelationship.Hostile;
                         default:
                             return FactionRelationship.Neutral;

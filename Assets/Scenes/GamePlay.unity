@@ -2118,6 +2118,8 @@ MonoBehaviour:
   MoveButton: {fileID: 152281636}
   UnitPlayer: {fileID: 0}
   Enemy: {fileID: 0}
+  Player0: []
+  Player1: []
 --- !u!1 &1660595778
 GameObject:
   m_ObjectHideFlags: 0

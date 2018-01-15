@@ -6,6 +6,8 @@ using UnityEngine.Events;
 using Assets.Scripts.SupportClasses;
 using System.Linq;
 using Assets.Scripts.Player;
+using GameSparks.RT;
+using Assets.Scripts.Map;
 
 namespace Assets.Scripts.Managers
 {
@@ -15,6 +17,7 @@ namespace Assets.Scripts.Managers
         public UnityEvent MatchTurnTaken;
         public UnityEvent MatchWon;
         public UnityEvent MatchLost;
+        public Matrix MatchMap;
 
         private string _matchID;
 
@@ -57,6 +60,27 @@ namespace Assets.Scripts.Managers
             Faction02PlayerId = message.Challenge.Challenged.First().Id;
             CurrentPlayerName = message.Challenge.NextPlayer == Faction01PlayerId ? Faction01PlayerName : Faction02PlayerName;
             //PlayerUnits = message.Challenge.ScriptData.GetIntList("PlayerUnits").Cast<PieceType>
+            MatchStarted.Invoke();
         }
+
+        private void OnChallengeTurnTaken(ChallengeTurnTakenMessage message)
+        {
+            CurrentPlayerName = message.Challenge.NextPlayer == Faction01PlayerId ? Faction01PlayerName : Faction02PlayerName;
+            ///Fields = message.Challenge.ScriptData.GetIntList("fields").Cast<PieceType>().ToArray();
+            MatchTurnTaken.Invoke();
+        }
+
+        private void OnChallengeWon(ChallengeWonMessage message)
+        {
+            IsMatchActive = false;
+            MatchWon.Invoke();
+        }
+
+        private void OnChallengeLost(ChallengeLostMessage message)
+        {
+            IsMatchActive = false;
+            MatchLost.Invoke();
+        }       
+
     }
 }

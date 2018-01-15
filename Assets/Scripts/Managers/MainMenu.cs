@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using Assets.Scripts.SupportClasses;
 namespace Assets.Scripts.Managers
 {
     public class MainMenu : MonoBehaviour
@@ -19,7 +19,8 @@ namespace Assets.Scripts.Managers
         IEnumerator LoadScene(string sceneName)
         {
             AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-            LoadPanel.SetActive(true);
+            
+            LoadPanel.SetActive(true);          
 
             while (!operation.isDone)
             {

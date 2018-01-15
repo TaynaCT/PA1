@@ -7,6 +7,7 @@ namespace Assets.Scripts.Player
     public enum UnitOwner
     {
         Player,
+        Player02,
         Enemy,
         Neutral
     }
