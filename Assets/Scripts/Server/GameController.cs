@@ -85,7 +85,7 @@ namespace Assets.Scripts.Server
 
                     _playerUnitList[i].SetPosition(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y), x, y);
                     Map.MoveUnit(_playerUnitList[i], Map.FindTilebyPos(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y)).Indice);
-                                    
+                 
                 }
             }
         }     
@@ -117,14 +117,5 @@ namespace Assets.Scripts.Server
                 }
             }
         }
-
-        //public void BroadcastHit(string shipHitName, string bulletOwnerId, string bulletName)
-        //{
-        //    using (RTData data = RTData.Get())
-        //    {
-        //        data.SetString(1, shipHitName).SetString(2, bulletOwnerId).SetString(3, bulletName);
-        //        GameSparksManager.Instance().GameSparksRtUnity.SendData(5, GameSparksRT.DeliveryIntent.RELIABLE, data);
-        //    }
-        //}
     }
 }

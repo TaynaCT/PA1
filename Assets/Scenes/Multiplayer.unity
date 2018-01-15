@@ -778,6 +778,7 @@ GameObject:
   - component: {fileID: 847134354}
   - component: {fileID: 847134355}
   - component: {fileID: 847134356}
+  - component: {fileID: 847134357}
   m_Layer: 0
   m_Name: GameSparksManager
   m_TagString: Untagged
@@ -841,6 +842,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &847134357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 847134353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 414b00657ee9219439696b86a2e46488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &951813056
 GameObject:
   m_ObjectHideFlags: 0

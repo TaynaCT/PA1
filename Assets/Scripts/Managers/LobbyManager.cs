@@ -50,7 +50,13 @@ namespace Assets.Scripts.Managers
         private void Login()
         {
             Debug.Log("OnLogin!!!!!");
-            BlockInput();
+            //BlockInput();
+
+            Debug.Log(UsernameInput.text);
+ 
+            Debug.Log(PasswordInput.text);
+
+            Debug.Log(GameSparksManager.Instance());
 
             GameSparksManager.Instance().AuthenticateUser(
                 UsernameInput.text,

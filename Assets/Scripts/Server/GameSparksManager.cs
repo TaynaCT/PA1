@@ -146,6 +146,9 @@ namespace Assets.Scripts.Server
 
             switch (rtPacket.OpCode)
             {
+                case 1:
+                    GameController.Instance().UpdateOpponentUnit(rtPacket);
+                    break;
                 case 2:
                     GameController.Instance().UpdateOpponentUnit(rtPacket);
                     break;                
