@@ -76,7 +76,7 @@ namespace Assets.Scripts.Server
         {
             Debug.Log("Attempting Matchmaking");
             new MatchmakingRequest().
-                SetMatchShortCode("TOP_SHOOTER_MATCH")
+                SetMatchShortCode("VSMatch")
                 .SetSkill(0)
                 .Send((matchmakingResponse) =>
                 {
@@ -84,6 +84,10 @@ namespace Assets.Scripts.Server
                     {
                         Debug.Log("Matchmaking Error " +
                                   matchmakingResponse.Errors.JSON);
+                    }
+                    else
+                    {
+                        Debug.Log("Matchmaking OK! ");
                     }
                 });
         }
@@ -138,9 +142,12 @@ namespace Assets.Scripts.Server
             if (GameController.Instance() != null)
             {
                 GameController.Instance().PacketReceived(rtPacket.PacketSize);
+                GameController.Instance().Match = SupportClasses.MatchType.MultiPlayer;
+                Debug.Log("GameController Match ---- " + GameController.Instance().Match);
             }
             else
             {
+
                 return;
             }
 

@@ -7,6 +7,8 @@ namespace Assets.Scripts.SupportClasses
 {
     public class MatchTypeSetting : Singleton<MatchTypeSetting>
     {
+        public MatchType Type { get; set; }
+       
         //private static MatchTypeSetting _instance;
         //public static MatchTypeSetting Instance()
         //{
@@ -18,15 +20,13 @@ namespace Assets.Scripts.SupportClasses
         //    return null;
         //}
 
-        //private void Awake()
-        //{
-        //    _instance = this;
-        //}
-        
-        public MatchType Type { get; set; }
         private void Awake()
         {
+            //_instance = this;
             Type = MatchType.None;
         }
+
+       
+       
     }
 }

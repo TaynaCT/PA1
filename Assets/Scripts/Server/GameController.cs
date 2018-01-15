@@ -24,6 +24,7 @@ namespace Assets.Scripts.Server
             _instance = this;
         }
 
+        private MatchType _matchType;
         public Unit[] UnitPrefabs;
         public Unit[] Units = new Unit[3];
         private Unit[] _playerUnitList;
@@ -33,8 +34,14 @@ namespace Assets.Scripts.Server
         private bool _clockStarted;
         private DateTime _endTime;
 
+        public MatchType Match {
+            get { return _matchType;}
+            set { _matchType = value; }
+        }
+
         void Start()
         {
+            Debug.Log(Match);
             for (int i = 0; i < Units.Length; i++)
             {
                 Vector2 inicialPos = MainLoop.Instance().GameMap.GetMatrixCell(2 + i, 3 + i).transform.position;

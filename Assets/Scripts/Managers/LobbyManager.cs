@@ -65,14 +65,26 @@ namespace Assets.Scripts.Managers
                 OnAuthentication);
 
             Debug.Log("OnRegistSuccess!!!!!");
+
+            LoginButton.gameObject.SetActive(false);
+            RegisterButton.gameObject.SetActive(false);
+            UsernameInput.gameObject.SetActive(false);
+            PasswordInput.gameObject.SetActive(false);
+            StartGameButton.gameObject.SetActive(true);
+            UnblockInput();
         }
 
         private void StartGame()
         {
-            MatchmakingRequest request = new MatchmakingRequest();
-            request.SetMatchShortCode("VSMatch");
-            request.SetSkill(0);
-            request.Send(OnMatchmakingSuccess, OnMatchmakingError);
+            //MatchmakingRequest request = new MatchmakingRequest();
+            //request.SetMatchShortCode("VSMatch");
+            //request.SetSkill(0);
+            //request.Send(OnMatchmakingSuccess, OnMatchmakingError);
+            Debug.Log("StartGame");
+           // MatchTypeSetting.Instance.Type = MatchType.MultiPlayer;
+            GameSparksManager.Instance().FindPlayers();
+            SceneManager.LoadScene("GamePlay");
+            //this.gameObject.SetActive(false);
         }
 
         private void Register()
@@ -110,6 +122,8 @@ namespace Assets.Scripts.Managers
         private void OnRegistrationSucess(RegistrationResponse response)
         {
             Debug.Log("OnRegistSuccess!!!!!");
+            Debug.Log("User ID: " + response.UserId);
+            Debug.Log("User Authenticated.");
             Login();
         }
 
@@ -122,12 +136,7 @@ namespace Assets.Scripts.Managers
         private void OnMatchmakingSuccess(MatchmakingResponse response)
         {
             //LoadingManager.Instance.LoadNextScene();
-            //Desativa Painel de log in
-            //this.gameObject.SetActive(false);
-           
-            MatchTypeSetting.Instance.Type = MatchType.MultiPlayer;
-            SceneManager.LoadScene("GamePlay");
-            
+            SceneManager.LoadScene("GamePlay");            
         }
 
         private void OnMatchmakingError(MatchmakingResponse response)

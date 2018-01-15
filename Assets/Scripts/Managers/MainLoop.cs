@@ -43,13 +43,16 @@ namespace Assets.Scripts.Managers
 
         public void Awake()
         {
+            Match = MatchType.MultiPlayer;
+            Debug.Log("------------------> " + Match);
             _instance = this;
             List<Unit> units = new List<Unit>();
 
             //definir o tamanho do mapa
             _map = new Matrix(24, 16);
 
-            //if (Match == MatchType.SinglePlayer) {
+            if (Match == MatchType.SinglePlayer)
+            {
                 //Posições iniciais do player
                 Vector2 playerInicialPos = _map.GetMatrixCell(2, 3).transform.position;
                 Vector2 enemyInicialPos = _map.GetMatrixCell(6, 6).transform.position;
@@ -74,41 +77,42 @@ namespace Assets.Scripts.Managers
                 units.Add(UnitPlayer);
 
                 _map.Units = units;
-            
-            //else if(Match == MatchType.MultiPlayer) //multiplayer
-            //{
-            //    Player0 = new List<Unit>();
-            //    Player1 = new List<Unit>();
-            //    for (int i = 0; i < 3; i++){
-            //        Vector2 inicialPos =  _map.GetMatrixCell(2+i, 3+i).transform.position;
-            //        Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), inicialPos, Quaternion.identity).GetComponent<Unit>();
+            }
+            else if (Match == MatchType.MultiPlayer) //multiplayer
+            {
+                Player0 = new List<Unit>();
+                Player1 = new List<Unit>();
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 inicialPos = _map.GetMatrixCell(2 + i, 3 + i).transform.position;
+                    Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), inicialPos, Quaternion.identity).GetComponent<Unit>();
 
-            //        unit.SetActionMenu(ActionMenuCanvas);
-            //        unit.SetMoveButton(MoveButton);
-            //        unit.CurrentTileCoords.SetIndice(2+i, 3+i);
-            //        unit.Faction = Faction.Player0;
+                    unit.SetActionMenu(ActionMenuCanvas);
+                    unit.SetMoveButton(MoveButton);
+                    unit.CurrentTileCoords.SetIndice(2 + i, 3 + i);
+                    unit.Faction = Faction.Player0;
 
-            //        Player0.Add(unit);
-            //        units.Add(unit);
-            //    }
+                    Player0.Add(unit);
+                    units.Add(unit);
+                }
 
-            //    for (int i = 0; i < 3; i++)
-            //    {
-            //        Vector2 inicialPos = _map.GetMatrixCell(_map.MatrixWidth - i, _map.MatrixHeight - i).transform.position;
-            //        Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitLucky"), inicialPos, Quaternion.identity).GetComponent<Unit>();
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 inicialPos = _map.GetMatrixCell(2 * i, 3 * i).transform.position;
+                    Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitLucky"), inicialPos, Quaternion.identity).GetComponent<Unit>();
 
-            //        unit.SetActionMenu(ActionMenuCanvas);
-            //        unit.SetMoveButton(MoveButton);
-            //        unit.CurrentTileCoords.SetIndice(_map.MatrixWidth - i, _map.MatrixHeight - i);
-            //        unit.Faction = Faction.Player1;
+                    unit.SetActionMenu(ActionMenuCanvas);
+                    unit.SetMoveButton(MoveButton);
+                    unit.CurrentTileCoords.SetIndice(2 * i+5, 3 * i+5);
+                    unit.Faction = Faction.Player1;
 
-            //        Player1.Add(unit);
-            //        units.Add(unit);
-            //    }
-            //}
-            //else { Debug.Log("No Match"); }
+                    Player1.Add(unit);
+                    units.Add(unit);
+                }
+            }
+            else { Debug.Log("No Match"); }
 
-        }
+            }
 
         public Matrix GameMap
         {
