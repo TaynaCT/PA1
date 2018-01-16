@@ -10,6 +10,7 @@ namespace Assets.Scripts.Server
     public class GameSparksManager : MonoBehaviour
     {
         private static GameSparksManager _instance;
+
         public static GameSparksManager Instance()
         {
             if (_instance != null)
@@ -155,11 +156,8 @@ namespace Assets.Scripts.Server
             {
                 case 1:
                     GameController.Instance().UpdateOpponentUnit(rtPacket);
+                    Debug.Log("UpdateOpponentUnit");
                     break;
-                case 2:
-                    GameController.Instance().UpdateOpponentUnit(rtPacket);
-                    break;                
-                         
             }
         }
 

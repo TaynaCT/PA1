@@ -25,11 +25,12 @@ namespace Assets.Scripts.Server
         }
 
         private MatchType _matchType;
+        
         public Unit[] UnitPrefabs;
         public Unit[] Units = new Unit[3];
         private Unit[] _playerUnitList;
         public Text[] PlayerNameList;
-        public Matrix Map;
+        public Matrix Map { get; set; }
         private DateTime _serverClock;
         private bool _clockStarted;
         private DateTime _endTime;
@@ -41,10 +42,11 @@ namespace Assets.Scripts.Server
 
         void Start()
         {
-            Debug.Log(Match);
+            Debug.Log(Match);           
+            
             for (int i = 0; i < Units.Length; i++)
             {
-                Vector2 inicialPos = MainLoop.Instance().GameMap.GetMatrixCell(2 + i, 3 + i).transform.position;
+                Vector2 inicialPos = Map.GetMatrixCell(2 + i, 3 + i).transform.position;
                 Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), inicialPos, Quaternion.identity).GetComponent<Unit>();
 
                 unit.SetActionMenu(MainLoop.Instance().ActionMenuCanvas);
@@ -80,7 +82,8 @@ namespace Assets.Scripts.Server
 
 
         public void UpdateOpponentUnit(RTPacket rtPacket)
-        {            
+        {
+            Debug.Log("Instanciação das unidades");
             for (int i = 0; i < _playerUnitList.Length; i++)
             {
                 if (_playerUnitList[i].name == rtPacket.Sender.ToString())
@@ -96,6 +99,11 @@ namespace Assets.Scripts.Server
                 }
             }
         }     
+
+        //public void SetMap(RTPacket rTPacket)
+        //{
+        //    Map = rTPacket.Data.GetData(1).
+        //}
 
         //public void RegisterOpponentAttack(RTPacket rtPacket)
         //{

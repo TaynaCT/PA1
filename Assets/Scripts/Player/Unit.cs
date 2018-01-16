@@ -111,13 +111,17 @@ namespace Assets.Scripts.Player
         }
 
         StatsManager statsManager;
-
+        
         private SpriteRenderer _spriteRender;
         private GameObject _moveButton;
         private GameObject _actionMenu;
         private UnitClass _class;
         private UnitOwner _owner;
         private bool _isActionMenuActive;
+        [SerializeField]
+        /// <summary>
+        /// Diz se a unidade foi selecionada ou não
+        /// </summary>
         private bool _isSelected;
         private Vector2 _lastPos;
         private MovementType movementType;
@@ -181,7 +185,7 @@ namespace Assets.Scripts.Player
             {
                 if (!_isActionMenuActive)
                 {
-                    ShowActionMenu(this.transform.position);
+                    ShowActionMenu(this.transform.position);                   
                 }
             }
         }
@@ -227,6 +231,8 @@ namespace Assets.Scripts.Player
                 _spriteRender.color = Color.white;
                 _isSelected = false;
             }
+
+            Debug.Log("Esta selecionada ???" + _isSelected);
         }
 
         public void DeactivateActionMenu()
@@ -249,8 +255,14 @@ namespace Assets.Scripts.Player
 
         public void SetPosition(Vector2 newPos, int x, int y)
         {
+            Vector3 oldPos = transform.position;
             transform.position = newPos;
             currentTileCoords.SetIndice(x, y);
+            if(oldPos != transform.position)
+            {
+                _isSelected = false;
+            }
+            
         }
         public void AddTileToRange(int x, int y)
         {
@@ -283,8 +295,8 @@ namespace Assets.Scripts.Player
 
         public void Deselect()
         {
-            _isSelected = true;
-            SelectUnit();
+            
+            //SelectUnit();
             statsManager.IsActive(_isSelected);
         }
 
@@ -307,6 +319,11 @@ namespace Assets.Scripts.Player
         {
             get { return _movement; }
             set { _movement = value; }
+        }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
         }
         public List<Indice> InMovementRangeCoords
         {
