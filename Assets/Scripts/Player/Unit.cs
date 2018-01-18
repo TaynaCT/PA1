@@ -15,6 +15,9 @@ namespace Assets.Scripts.Player
         const int MAXHP = 50;
         const int MAXMP = 30;
 
+        [SerializeField]
+        Text PlayerID;
+
         private UnitBehaviour behaviour;
         private bool finishedTurn;
 
@@ -142,12 +145,19 @@ namespace Assets.Scripts.Player
         private Atributes _atributes;
         private Indice currentTileCoords;
 
+        public string UnitId { get; set; }
+        public Sprite UnitSprite { get; set; }
+
         public void Awake()
         {
             currentTileCoords = new Indice(0, 0);
         }
         void Start()
         {
+
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = UnitSprite;
+            //PlayerID.text = UnitId;
+
             _actionMenu.SetActive(false);
             _isActionMenuActive = false;
             this.gameObject.tag = "Unit";

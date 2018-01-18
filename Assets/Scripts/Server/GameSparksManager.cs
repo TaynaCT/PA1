@@ -117,6 +117,7 @@ namespace Assets.Scripts.Server
                 (ready) => {OnRtReady(ready);},
                 (packet) => {OnPacketReceived(packet);});
             GameSparksRtUnity.Connect();
+
         }
 
         private void OnPlayerConnected(int peerId)
@@ -135,6 +136,8 @@ namespace Assets.Scripts.Server
             {
                 Debug.Log("RT Sessions Connected");
                 //SceneManager.LoadScene(1);
+                SceneManager.LoadScene("GamePlay");               
+
             }
         }
 
@@ -148,7 +151,7 @@ namespace Assets.Scripts.Server
             }
             else
             {
-
+                Debug.Log("GameController is Null");
                 return;
             }
 
@@ -157,6 +160,13 @@ namespace Assets.Scripts.Server
                 case 1:
                     GameController.Instance().UpdateOpponentUnit(rtPacket);
                     Debug.Log("UpdateOpponentUnit");
+                    break;
+                case 2:
+                    GameController.Instance().SetMap(rtPacket);
+                    //Debug.Log("UpdateOpponentUnit");
+                    break;
+                case 100:
+                    //SceneManager.LoadScene("GamePlay");
                     break;
             }
         }

@@ -9,6 +9,7 @@ using GameSparks.Api.Requests;
 using UnityEngine.SceneManagement;
 using Assets.Scripts.SupportClasses;
 using Assets.Scripts.Server;
+using System;
 
 namespace Assets.Scripts.Managers
 {
@@ -20,6 +21,7 @@ namespace Assets.Scripts.Managers
         public GameObject StartGameButton;
         public GameObject RegisterButton;
 
+        RTSessionInfo _rtSessionInfo;
         private void Start()
         {
             GS.GameSparksAvailable += (isAvailable) =>
@@ -39,7 +41,16 @@ namespace Assets.Scripts.Managers
             RegisterButton.GetComponent<Button>().onClick.AddListener(Register);
             StartGameButton.GetComponent<Button>().onClick.AddListener(StartGame);
             MatchNotFoundMessage.Listener += OnMatchNotFound;
+            MatchFoundMessage.Listener += OnMatchFound;
             ChallengeStartedMessage.Listener += OnChallengeStarted;
+        }
+
+        private void OnMatchFound(MatchFoundMessage obj)
+        {
+            Debug.Log("OnMatchFound");
+            _rtSessionInfo = new RTSessionInfo(obj);
+            GameSparksManager.Instance().StartNewRtSession(_rtSessionInfo);
+            //SceneManager.LoadScene("GamePlay");
         }
 
         private void OnDestroy()
@@ -74,17 +85,17 @@ namespace Assets.Scripts.Managers
             UnblockInput();
         }
 
+
+        /// <summary>
+        /// Inicia a cena do jogo
+        /// </summary>
         private void StartGame()
-        {
-            //MatchmakingRequest request = new MatchmakingRequest();
-            //request.SetMatchShortCode("VSMatch");
-            //request.SetSkill(0);
-            //request.Send(OnMatchmakingSuccess, OnMatchmakingError);
-            Debug.Log("StartGame");
-           // MatchTypeSetting.Instance.Type = MatchType.MultiPlayer;
+        {           
+            Debug.Log("StartGame");           
             GameSparksManager.Instance().FindPlayers();
-            SceneManager.LoadScene("GamePlay");
-            //this.gameObject.SetActive(false);
+            
+            
+            
         }
 
         private void Register()
@@ -136,7 +147,7 @@ namespace Assets.Scripts.Managers
         private void OnMatchmakingSuccess(MatchmakingResponse response)
         {
             //LoadingManager.Instance.LoadNextScene();
-            SceneManager.LoadScene("GamePlay");            
+            //SceneManager.LoadScene("GamePlay");            
         }
 
         private void OnMatchmakingError(MatchmakingResponse response)

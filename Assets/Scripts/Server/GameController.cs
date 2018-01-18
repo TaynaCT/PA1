@@ -9,7 +9,6 @@ using Assets.Scripts.Map;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Player;
 
-
 namespace Assets.Scripts.Server
 {
     public class GameController : MonoBehaviour
@@ -27,10 +26,11 @@ namespace Assets.Scripts.Server
         private MatchType _matchType;
         
         public Unit[] UnitPrefabs;
-        public Unit[] Units = new Unit[3];
-        private Unit[] _playerUnitList;
+        public Unit[] UnitsPerPlayer = new Unit[3];
+        private Unit[,] _playerUnitList;
+        public Sprite[] _spriteList;
         public Text[] PlayerNameList;
-        public Matrix Map { get; set; }
+        public Matrix Map { get; private set; }
         private DateTime _serverClock;
         private bool _clockStarted;
         private DateTime _endTime;
@@ -41,24 +41,32 @@ namespace Assets.Scripts.Server
         }
 
         void Start()
-        {
-            Debug.Log(Match);           
-            
-            for (int i = 0; i < Units.Length; i++)
-            {
-                Vector2 inicialPos = Map.GetMatrixCell(2 + i, 3 + i).transform.position;
-                Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), inicialPos, Quaternion.identity).GetComponent<Unit>();
+        {            
+            Debug.Log(Match);
+            int unitOffset = 1;
+            for (int playerIndex = 0; playerIndex < GameSparksManager.Instance().RtSessionInfo.RtPlayerList.Count; playerIndex++)
+            {                
+                Debug.Log("RtPlayerList.Count" + GameSparksManager.Instance().RtSessionInfo.RtPlayerList.Count);
+                //para cada player é atribuido 3 unidades
+                for (int i = 0; i < UnitsPerPlayer.Length; i++)
+                {
+                    //Debug.Log(Map);
+                    //Vector2 inicialPos = Map.GetMatrixCell(2 + i * playerIndex, 3 + i * playerIndex).transform.position;
+                    //Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), inicialPos, Quaternion.identity).GetComponent<Unit>();
+                    //unit.UnitSprite = _spriteList[playerIndex];
+                    //unit.UnitId = GameSparksManager.Instance().RtSessionInfo.RtPlayerList[playerIndex].DisplayName;
+                    //unit.SetActionMenu(MainLoop.Instance().ActionMenuCanvas);
+                    //unit.SetMoveButton(MainLoop.Instance().MoveButton);
+                    //unit.CurrentTileCoords.SetIndice(2 + i, 3 + i);
+                    //unit.Faction = Faction.Player0;
+                    MainLoop.Instance().SetUnit(new Indice(i * unitOffset, i * unitOffset), _spriteList[playerIndex]);
+                    
+                    //UnitsPerPlayer[i] = unit;
+                    //_playerUnitList[playerIndex, i] = unit;
+                }
 
-                unit.SetActionMenu(MainLoop.Instance().ActionMenuCanvas);
-                unit.SetMoveButton(MainLoop.Instance().MoveButton);
-                unit.CurrentTileCoords.SetIndice(2 + i, 3 + i);
-                unit.Faction = Faction.Player0;
-
-                _playerUnitList[i] = unit;
+                unitOffset++;
             }
-
-            _playerUnitList = new Unit[GameSparksManager.Instance().RtSessionInfo.RtPlayerList.Count];
-
         }
     
     // Analytics: Use if you want to analize the packet information
@@ -86,25 +94,25 @@ namespace Assets.Scripts.Server
             Debug.Log("Instanciação das unidades");
             for (int i = 0; i < _playerUnitList.Length; i++)
             {
-                if (_playerUnitList[i].name == rtPacket.Sender.ToString())
+                if (UnitsPerPlayer[i].name == rtPacket.Sender.ToString())
                 {
                     //_playerUnitList[i].GoToPosition = new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y) + new Vector2(rtPacket.Data.GetVector4(1).Value.z, rtPacket.Data.GetVector4(1).Value.w);
                     //_playerUnitList[i].GotoRotation = rtPacket.Data.GetFloat(2).Value;
                     int x = Map.FindTilebyPos(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y)).Indice.X;
                     int y = Map.FindTilebyPos(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y)).Indice.Y;
 
-                    _playerUnitList[i].SetPosition(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y), x, y);
-                    Map.MoveUnit(_playerUnitList[i], Map.FindTilebyPos(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y)).Indice);
+                    UnitsPerPlayer[i].SetPosition(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y), x, y);
+                    Map.MoveUnit(UnitsPerPlayer[i], Map.FindTilebyPos(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y)).Indice);
                  
                 }
             }
-        }     
+        }
 
-        //public void SetMap(RTPacket rTPacket)
-        //{
-        //    Map = rTPacket.Data.GetData(1).
-        //}
-
+        public void SetMap(RTPacket rtPacket)
+        {
+            //Map = rtPacket.Data.GetString;
+        }
+        
         //public void RegisterOpponentAttack(RTPacket rtPacket)
         //{
         //    for (int i = 0; i < _playerUnitList.Length; i++)
@@ -125,9 +133,9 @@ namespace Assets.Scripts.Server
         {
             for (int i = 0; i < _playerUnitList.Length; i++)
             {
-                if (_playerUnitList[i].name == peerId.ToString())
+                if (UnitsPerPlayer[i].name == peerId.ToString())
                 {
-                    _playerUnitList[i].FinishedTurn = true;
+                    UnitsPerPlayer[i].FinishedTurn = true;
                     break;
                 }
             }

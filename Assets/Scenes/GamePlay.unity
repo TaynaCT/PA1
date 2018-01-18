@@ -307,6 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 84289823}
   - component: {fileID: 1623016439}
+  - component: {fileID: 84289824}
   m_Layer: 0
   m_Name: WorldGameObject
   m_TagString: WorldObject
@@ -328,6 +329,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &84289824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 84289822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7e49e925ad16e42ba37c634996c68b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnitPrefabs:
+  - {fileID: 114463192240872996, guid: d8aff8ede7e4d0844a3ceba8aa68c1ea, type: 2}
+  - {fileID: 114463192240872996, guid: d8aff8ede7e4d0844a3ceba8aa68c1ea, type: 2}
+  UnitsPerPlayer:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _spriteList:
+  - {fileID: 21300002, guid: 2a52057a08a39764383976336ba4c275, type: 3}
+  - {fileID: 21300000, guid: 2a52057a08a39764383976336ba4c275, type: 3}
+  PlayerNameList: []
 --- !u!1 &130582096
 GameObject:
   m_ObjectHideFlags: 0
@@ -2116,10 +2139,9 @@ MonoBehaviour:
   StatsManager: {fileID: 2041768135}
   ActionMenuCanvas: {fileID: 20941780}
   MoveButton: {fileID: 152281636}
-  UnitPlayer: {fileID: 0}
+  actualUnit: {fileID: 0}
   Enemy: {fileID: 0}
   Player0: []
-  Player1: []
 --- !u!1 &1660595778
 GameObject:
   m_ObjectHideFlags: 0
