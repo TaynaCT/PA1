@@ -45,7 +45,7 @@ namespace Assets.Scripts.Map
                 {
                     MainLoop.Instance().HighLightUnitRange();
                     //move o player para o tile pretendido.
-                    MainLoop.Instance().MoveUnit(this.transform.position, _indice.X, _indice.Y);
+                    MainLoop.Instance().MoveUnit(this.transform.position/*, _indice.X, _indice.Y*/);
                     //gameObject.GetComponent<SpriteRenderer>().color = Color.white;
                     return;
                 }

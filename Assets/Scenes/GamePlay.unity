@@ -340,9 +340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7e49e925ad16e42ba37c634996c68b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitPrefabs:
-  - {fileID: 114463192240872996, guid: d8aff8ede7e4d0844a3ceba8aa68c1ea, type: 2}
-  - {fileID: 114463192240872996, guid: d8aff8ede7e4d0844a3ceba8aa68c1ea, type: 2}
   UnitsPerPlayer:
   - {fileID: 0}
   - {fileID: 0}

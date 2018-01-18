@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using Assets.Scripts.SupportClasses;
 using Assets.Scripts.Map;
 using Assets.Scripts.Managers;
-using Assets.Scripts.Player;
 
 namespace Assets.Scripts.Server
 {
@@ -24,8 +23,8 @@ namespace Assets.Scripts.Server
         }
 
         private MatchType _matchType;
-        
-        public Unit[] UnitPrefabs;
+       
+       // public Unit[] UnitPrefabs;
         public Unit[] UnitsPerPlayer = new Unit[3];
         private Unit[,] _playerUnitList;
         public Sprite[] _spriteList;
@@ -41,7 +40,9 @@ namespace Assets.Scripts.Server
         }
 
         void Start()
-        {            
+        {
+            _playerUnitList = new Unit[GameSparksManager.Instance().RtSessionInfo.RtPlayerList.Count, UnitsPerPlayer.Length];
+            int spawmIndice = 0; //------------------------
             Debug.Log(Match);
             int unitOffset = 1;
             for (int playerIndex = 0; playerIndex < GameSparksManager.Instance().RtSessionInfo.RtPlayerList.Count; playerIndex++)
@@ -50,6 +51,7 @@ namespace Assets.Scripts.Server
                 //para cada player é atribuido 3 unidades
                 for (int i = 0; i < UnitsPerPlayer.Length; i++)
                 {
+                    Debug.Log(spawmIndice);
                     //Debug.Log(Map);
                     //Vector2 inicialPos = Map.GetMatrixCell(2 + i * playerIndex, 3 + i * playerIndex).transform.position;
                     //Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitWolf"), inicialPos, Quaternion.identity).GetComponent<Unit>();
@@ -59,10 +61,19 @@ namespace Assets.Scripts.Server
                     //unit.SetMoveButton(MainLoop.Instance().MoveButton);
                     //unit.CurrentTileCoords.SetIndice(2 + i, 3 + i);
                     //unit.Faction = Faction.Player0;
-                    MainLoop.Instance().SetUnit(new Indice(i * unitOffset, i * unitOffset), _spriteList[playerIndex]);
-                    
+                    _playerUnitList[playerIndex, i] = MainLoop.Instance().SetUnit(
+                        new Indice(i * unitOffset, i * unitOffset), _spriteList[playerIndex], 
+                        spawmIndice,
+                        GameSparksManager.Instance().RtSessionInfo.RtPlayerList[playerIndex].PeerId,
+                        GameSparksManager.Instance().RtSessionInfo.RtPlayerList[playerIndex].DisplayName);
+                    spawmIndice++;
+                    if(_playerUnitList[playerIndex, i] == null)
+                    {
+                        Debug.Log(_playerUnitList[playerIndex, i] + "IS NULL");
+                    }
+
                     //UnitsPerPlayer[i] = unit;
-                    //_playerUnitList[playerIndex, i] = unit;
+                    
                 }
 
                 unitOffset++;
@@ -92,18 +103,19 @@ namespace Assets.Scripts.Server
         public void UpdateOpponentUnit(RTPacket rtPacket)
         {
             Debug.Log("Instanciação das unidades");
-            for (int i = 0; i < _playerUnitList.Length; i++)
+            for (int i = 0; i < GameSparksManager.Instance().RtSessionInfo.RtPlayerList.Count; i++)
             {
-                if (UnitsPerPlayer[i].name == rtPacket.Sender.ToString())
+                for (int u = 0; u < UnitsPerPlayer.Length; u++)
                 {
-                    //_playerUnitList[i].GoToPosition = new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y) + new Vector2(rtPacket.Data.GetVector4(1).Value.z, rtPacket.Data.GetVector4(1).Value.w);
-                    //_playerUnitList[i].GotoRotation = rtPacket.Data.GetFloat(2).Value;
-                    int x = Map.FindTilebyPos(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y)).Indice.X;
-                    int y = Map.FindTilebyPos(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y)).Indice.Y;
-
-                    UnitsPerPlayer[i].SetPosition(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y), x, y);
-                    Map.MoveUnit(UnitsPerPlayer[i], Map.FindTilebyPos(new Vector2(rtPacket.Data.GetVector4(1).Value.x, rtPacket.Data.GetVector4(1).Value.y)).Indice);
-                 
+                    if (_playerUnitList[i, u].UnitId == GameSparksManager.Instance().RtSessionInfo.RtPlayerList[i].PeerId.ToString())
+                    {
+                        //if (_playerUnitList[i, u].name == rtPacket.Sender.ToString())
+                        //{
+                        Debug.Log("CONDIÇÃO ACEITE!!");
+                         //_playerUnitList[i, u].SetPosition(new Vector2(rtPacket.Data.GetVector2(1).Value.x, rtPacket.Data.GetVector2(1).Value.y));
+                        MainLoop.Instance().UpdateUnitPos(_playerUnitList[i, u].UnitId, new Vector2(rtPacket.Data.GetVector2(1).Value.x, rtPacket.Data.GetVector2(1).Value.y));
+                        //}
+                    }
                 }
             }
         }

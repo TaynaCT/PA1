@@ -7,6 +7,7 @@ using Assets.Scripts.Managers;
 using Assets.Scripts.Interface;
 using Assets.Scripts.SupportClasses;
 using Assets.Scripts.AI;
+using System;
 
 namespace Assets.Scripts.Player
 {
@@ -145,7 +146,7 @@ namespace Assets.Scripts.Player
         private Atributes _atributes;
         private Indice currentTileCoords;
 
-        public string UnitId { get; set; }
+        private string _unitID = "-";
         public Sprite UnitSprite { get; set; }
 
         public void Awake()
@@ -154,10 +155,16 @@ namespace Assets.Scripts.Player
         }
         void Start()
         {
+            Guid guid = Guid.NewGuid();
+            gameObject.name = guid.ToString();
+
+            if (PlayerID != null)
+            {
+                PlayerID.text = "none";
+            }
 
             this.gameObject.GetComponent<SpriteRenderer>().sprite = UnitSprite;
-            //PlayerID.text = UnitId;
-
+           
             _actionMenu.SetActive(false);
             _isActionMenuActive = false;
             this.gameObject.tag = "Unit";
@@ -167,10 +174,10 @@ namespace Assets.Scripts.Player
             _itens = new GameObject[3];
             _spriteRender = GetComponent<SpriteRenderer>();
             statsManager = MainLoop.Instance().StatsManager;
-
+            
             _movement = 2;
             _atributes = new Atributes(50f, 0, 30, 0, 15, 10, 0.3f, 0.5f, 0.4f, 5);
-            SetStatsValues();
+            SetStatsValues();          
 
             _class = UnitClass.Archer;
             movementType = MovementType.Foot;
@@ -254,6 +261,17 @@ namespace Assets.Scripts.Player
             }
         }
 
+        public void UnitIdText(string unitIdtext, string playerName)
+        {
+            _unitID = unitIdtext;
+            //PlayerID.text = playerName;
+        }
+
+        public string UnitId
+        {
+            get { return _unitID; }            
+        }
+
         public void ShowActionMenu(Vector2 mousePos)
         {
             Vector2 menuPos = new Vector2(mousePos.x + ((_actionMenu.GetComponent<RectTransform>().localScale.x + 2.5f) / 2), mousePos.y + ((_actionMenu.GetComponent<RectTransform>().localScale.y + 2f) / 2));
@@ -263,11 +281,21 @@ namespace Assets.Scripts.Player
             _isActionMenuActive = true;
         }
 
-        public void SetPosition(Vector2 newPos, int x, int y)
+        /// <summary>
+        /// Método que atribui a posiçãon o espaço (vector2) e na matriz
+        /// </summary>
+        /// <param name="newPos"></param>
+        public void SetPosition(Vector2 newPos/*, int x, int y*/)
         {
             Vector3 oldPos = transform.position;
             transform.position = newPos;
-            currentTileCoords.SetIndice(x, y);
+
+           // currentTileCoords.SetIndice(x, y);
+
+            currentTileCoords.SetIndice(
+                MainLoop.Instance().GameMap.FindTilebyPos(newPos).Indice.X,
+                MainLoop.Instance().GameMap.FindTilebyPos(newPos).Indice.Y);
+            
             if(oldPos != transform.position)
             {
                 _isSelected = false;
@@ -309,17 +337,7 @@ namespace Assets.Scripts.Player
             //SelectUnit();
             statsManager.IsActive(_isSelected);
         }
-
-        //public void AddTileToAttackRange(int x, int y)
-        //{
-        //    Indice indice = new Indice(x, y);
-
-        //    if (!_enemyInRange.Contains(indice))
-        //    {
-        //        _enemyInRange.Add(indice);
-        //    }
-        //}
-
+     
         public Vector2 Position
         {
             get { return this.transform.position; }
@@ -422,7 +440,7 @@ namespace Assets.Scripts.Player
         {
             previousTileCoords = currentTileCoords;
             currentTileCoords = position;
-            SetPosition(Matrix.GetVectorFromIndice(position), position.X, position.Y);
+            SetPosition(Matrix.GetVectorFromIndice(position)/*, position.X, position.Y*/);
         }
 
         public static InteractionSimulationResults SimulateInteraction(Unit initiator, Unit defender)

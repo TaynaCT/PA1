@@ -35,7 +35,7 @@ namespace Assets.Scripts.Managers
         public Unit actualUnit;
         public Unit Enemy;
         public List<Unit> Player0;
-        //public List<Unit> Player1;
+        
         private Matrix _map;
         private GameObject _actionMenu;
         private bool _isActionMenuActive;
@@ -45,7 +45,10 @@ namespace Assets.Scripts.Managers
         /// </summary>
         private bool _wantToMove = false;
         private Vector2 _newpos = new Vector2();
+        private Vector2 _oldPos = new Vector2(); 
         private Indice _newlIndice = new Indice(0,0);
+
+        private Indice[] _spawmPos = { new Indice(5, 5), new Indice(5, 4), new Indice(5, 6), new Indice(10, 10), new Indice(10, 11), new Indice(10, 12) };
         public MatchType Match { get;  set; }
 
         public List<IDeselect> interfaceList = new List<IDeselect>();
@@ -91,6 +94,7 @@ namespace Assets.Scripts.Managers
 
                 _map.Units = _units;
             }
+
             else if (Match == MatchType.MultiPlayer) //multiplayer
             {
                // Player0 = new List<Unit>();
@@ -127,21 +131,37 @@ namespace Assets.Scripts.Managers
             else { Debug.Log("No Match"); }
         }
 
-        public void SetUnit(Indice i, Sprite sprite)
-        {            
-            Vector2 inicialPos = _map.GetMatrixCell(2 * i.X, 3 * i.Y).transform.position;
+        public Unit SetUnit(Indice i, Sprite sprite, int spawmpointIndice, int peerId, string playerName)
+        {
+            //Vector2 inicialPos = _map.GetMatrixCell(2 * i.X, 3 * i.Y).transform.position;
+            Vector2 inicialPos = _map.GetMatrixCell(_spawmPos[spawmpointIndice].X, _spawmPos[spawmpointIndice].Y).transform.position;
+            Debug.Log("inicialPos -- " + inicialPos);
             Unit unit = GameObject.Instantiate((GameObject)Resources.Load("UnitLucky"), inicialPos, Quaternion.identity).GetComponent<Unit>();
-            unit.UnitSprite = sprite;
+            unit.UnitSprite = sprite;            
             unit.SetActionMenu(ActionMenuCanvas);
             unit.SetMoveButton(MoveButton);
-            unit.CurrentTileCoords.SetIndice(2 * i.X , 3 * i.Y );
+            //unit.CurrentTileCoords.SetIndice(2 * i.X , 3 * i.Y );
+            unit.SetPosition(inicialPos);
             unit.Faction = Faction.Player1;
-
+            unit.UnitIdText(peerId.ToString(), playerName);
+            
             Debug.Log("SetUnit - unit" + i + unit);
 
             Player0.Add(unit);
             _units.Add(unit);
             _map.Units = _units;
+            return unit;
+        }
+
+        public void UpdateUnitPos(string unitId, Vector2 newpos)
+        {
+            foreach(Unit u in _units)
+            {
+                if(u.UnitId == unitId)
+                {
+                    u.SetPosition(newpos);
+                }
+            }
         }
 
         public Matrix GameMap
@@ -178,19 +198,21 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        public void MoveUnit(Vector2 newPos, int indiceX, int indiceY)
+        public void MoveUnit(Vector2 newPos/*, int indiceX, int indiceY*/)
         {
             foreach (Unit u in Player0)
             {
                 Debug.Log("foreach" + u.IsSelected);
 
                 if (u.IsSelected == true)
-                {
+                {                    
+                    _oldPos = u.Position;
                     //UnitPlayer.Position = newPos;
-                    u.SetPosition(newPos, indiceX, indiceY);
+                    u.SetPosition(newPos/*, indiceX, indiceY*/);
                     _newpos = newPos;
-                    _newlIndice.X = indiceX;
-                    _newlIndice.Y = indiceY;
+                    //_newlIndice.X = indiceX;
+                    //_newlIndice.Y = indiceY;
+                    actualUnit = u;
                     _wantToMove = true;
                 }
             }
@@ -205,15 +227,15 @@ namespace Assets.Scripts.Managers
             {
                 using (RTData data = RTData.Get())
                 {
-                    data.SetVector4(1,
-                        new Vector4(actualUnit.Position.x, actualUnit.Position.y, _newlIndice.X, _newlIndice.Y));
-                    // data.SetFloat(2, transform.eulerAngles.z);
+                    data.SetVector2(1, actualUnit.Position);                       
+                   // data.SetString(1, actualUnit.gameObject.name);
                    
                     GameSparksManager.Instance().GameSparksRtUnity.SendData(1, GameSparksRT.DeliveryIntent.UNRELIABLE_SEQUENCED, data);
-
-                }
-                _wantToMove = false;
+                    Debug.Log(actualUnit.name + "has moved");
+                }                
             }
+
+            _wantToMove = false;
             yield return new WaitForSeconds(0.1f);
             StartCoroutine(SendUnitNewPos());
         }
